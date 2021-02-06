@@ -14,8 +14,9 @@ const DropdownDiv = styled.div`
 const BoxesWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 20px 50px;
-  padding: 0 25px;
+  grid-gap: 20px 25px;
+  margin: auto;
+  width: 95vw;
 `;
 
 const IndexComponent = (props) => {
@@ -24,6 +25,12 @@ const IndexComponent = (props) => {
   const data = props.data.allDataCsv.edges
     .map((edge) => edge.node)
     .filter((node) => node.Disease_Group === diseaseGroup);
+  data.forEach((node) => {
+    node.SAB = Math.floor(Math.random() * 4);
+    node.Venture_Funders = Math.floor(Math.random() * 4);
+    node.Public_Holders = Math.floor(Math.random() * 4);
+    node.Target = node.Target.split(",").join(", ");
+  });
   const distinctDiseaseGroups = props.data.allDataCsv.distinct;
   console.log(data);
 
@@ -49,7 +56,6 @@ const IndexComponent = (props) => {
           placeholder="Select an option"
         />
       </DropdownDiv>
-      <p>{`${diseaseGroup} ${data.length}`}</p>
       <BoxesWrapper>{boxes}</BoxesWrapper>
     </div>
   );
