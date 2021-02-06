@@ -46,18 +46,12 @@ const IndexComponent = (props) => {
   }));
 
   const boxes = distintIndicationData.map((x) => (
-    <IndicationComponent name={x.name} data={x.data} />
+    <IndicationComponent name={x.name} data={x.data} key={x.name} />
   ));
 
   return (
     <div>
       <DropdownDiv>
-        {/* <Dropdown
-          options={distinctDiseaseGroups}
-          onChange={(e) => setDiseaseGroup(e.value)}
-          value={diseaseGroup}
-          placeholder="Select an option"
-        /> */}
         <Select
           options={distinctDiseaseGroups.map((node) => ({
             value: node,

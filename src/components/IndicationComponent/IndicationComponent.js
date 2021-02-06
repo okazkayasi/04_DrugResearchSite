@@ -11,6 +11,32 @@ import Pill from "../icons/Pill";
 import Spray from "../icons/spray";
 import Topical from "../icons/topical";
 
+const quarterGet = (record) => {
+  const dateList = [
+    record.Phase_I_Date,
+    record.Phase_I_Event_Date,
+    record.Phase_II_Date,
+    record.Phase_II_Event_Date,
+    record.Phase_III_Date,
+    record.Phase_III_Event_Date,
+  ].filter((a) => a !== "");
+
+  if (dateList.length === 0) return "-";
+  console.log(dateList, record.Ticker);
+
+  const dateString = dateList.reduce((a, b) =>
+    new Date(a.MeasureDate) > new Date(b.MeasureDate) ? a : b
+  );
+
+  if (!dateString) return "";
+  const year = dateString.split("/")[2].slice(2);
+  const month = parseInt(dateString.split("/")[0]);
+  const quarter =
+    month <= 3 ? "1Q" : month <= 6 ? "2Q" : month <= 9 ? "3Q" : "4Q";
+
+  return quarter + year;
+};
+
 const WrapperBox = styled.div`
   border: 1px solid #000000;
   border-radius: 20px;
@@ -87,6 +113,12 @@ const IndicationComponent = (props) => {
       title: "Phase",
       dataIndex: "Current_Phase",
       key: "Current_Phase",
+      width: "10px",
+    },
+    {
+      title: "Latest Data",
+      key: "Latest_Data",
+      render: (text, record) => quarterGet(record),
       width: "10px",
     },
     {
