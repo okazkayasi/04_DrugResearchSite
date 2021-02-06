@@ -1,9 +1,9 @@
 import { graphql } from "gatsby";
 import React, { useState } from "react";
 import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
-import Dropdown from "react-dropdown";
 import styled from "styled-components";
 import "react-dropdown/style.css";
+import Select from "react-select";
 
 const DropdownDiv = styled.div`
   max-width: 400px;
@@ -20,11 +20,15 @@ const BoxesWrapper = styled.div`
 `;
 
 const IndexComponent = (props) => {
-  const [diseaseGroup, setDiseaseGroup] = useState("Allergy");
-  console.log(diseaseGroup, "dg");
+  const [diseaseGroupSelect, setDiseaseGroupSelect] = useState({
+    value: "Allergy",
+    label: "Allergy",
+  });
+
+  console.log(diseaseGroupSelect, "dg");
   const data = props.data.allDataCsv.edges
     .map((edge) => edge.node)
-    .filter((node) => node.Disease_Group === diseaseGroup);
+    .filter((node) => node.Disease_Group === diseaseGroupSelect.value);
   data.forEach((node) => {
     node.SAB = Math.floor(Math.random() * 4);
     node.Venture_Funders = Math.floor(Math.random() * 4);
@@ -49,11 +53,21 @@ const IndexComponent = (props) => {
   return (
     <div>
       <DropdownDiv>
-        <Dropdown
+        {/* <Dropdown
           options={distinctDiseaseGroups}
           onChange={(e) => setDiseaseGroup(e.value)}
           value={diseaseGroup}
           placeholder="Select an option"
+        /> */}
+        <Select
+          options={distinctDiseaseGroups.map((node) => ({
+            value: node,
+            label: node,
+          }))}
+          onChange={(e) =>
+            setDiseaseGroupSelect({ value: e.value, label: e.value })
+          }
+          value={diseaseGroupSelect}
         />
       </DropdownDiv>
       <BoxesWrapper>{boxes}</BoxesWrapper>
