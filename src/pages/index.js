@@ -2,7 +2,6 @@ import { graphql } from "gatsby";
 import React, { useState } from "react";
 import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
 import styled from "styled-components";
-import "react-dropdown/style.css";
 import Select from "react-select";
 
 const DropdownDiv = styled.div`
