@@ -3,6 +3,14 @@ import styled from "styled-components";
 import { Table } from "antd";
 import "./IndicationComponent.css";
 
+import Drop from "../icons/drops";
+import Inhaler from "../icons/inhaler";
+import Injection from "../icons/injection";
+import IV from "../icons/IV";
+import Pill from "../icons/Pill";
+import Spray from "../icons/spray";
+import Topical from "../icons/topical";
+
 const WrapperBox = styled.div`
   border: 1px solid #000000;
   border-radius: 20px;
@@ -19,6 +27,57 @@ const ColoredDiv = styled.div`
   text-align: center;
   margin: auto;
 `;
+
+const svgSelector = (admin) => {
+  const dropList = [
+    "Intraocular",
+    "Intraocular/Subretinal/Subconjunctival",
+    "Subconjunctival",
+    "Subretinal",
+  ];
+  const inhalerList = ["Inhaled"];
+  const injectionList = [
+    "Injection",
+    "Intramuscular (IM)",
+    "Subcutaneous (SQ)",
+    "Intradermal",
+    "Intraarticular",
+    "Intrathecal",
+    "Intratracheal",
+    "Intratumoral",
+    "Intratympanic",
+    "Percutaneous Catheter",
+    "Percutaneous Catheter/Injection",
+  ];
+  const ivList = ["Intravenous (IV)"];
+  const pillList = [
+    "Oral (PO)",
+    "Oral Transmucosal",
+    "Sublingual (SL)",
+    "Sublingual (SL)/Oral Transmucosal",
+  ];
+  const sprayList = ["Intranasal"];
+  const topicalList = ["Topical"];
+
+  let selectionSvg;
+  if (admin.split(", ").find((ad) => dropList.includes(ad)))
+    selectionSvg = <Drop />;
+  else if (admin.split(", ").find((ad) => inhalerList.includes(ad)))
+    selectionSvg = <Inhaler />;
+  else if (admin.split(", ").find((ad) => injectionList.includes(ad)))
+    selectionSvg = <Injection />;
+  else if (admin.split(", ").find((ad) => ivList.includes(ad)))
+    selectionSvg = <IV />;
+  else if (admin.split(", ").find((ad) => pillList.includes(ad)))
+    selectionSvg = <Pill />;
+  else if (admin.split(", ").find((ad) => sprayList.includes(ad)))
+    selectionSvg = <Spray />;
+  else if (admin.split(", ").find((ad) => topicalList.includes(ad)))
+    selectionSvg = <Topical />;
+  else if (admin === "N/A") selectionSvg = <p>{`-`}</p>;
+  else selectionSvg = admin;
+  return selectionSvg || "-----";
+};
 
 const IndicationComponent = (props) => {
   const dataSource = props.data;
@@ -38,8 +97,8 @@ const IndicationComponent = (props) => {
     },
     {
       title: "Admin",
-      dataIndex: "Route_of_Administration",
       key: "Route_of_Administration",
+      render: (text, record) => svgSelector(record.Route_of_Administration),
       width: "10px",
     },
     {
