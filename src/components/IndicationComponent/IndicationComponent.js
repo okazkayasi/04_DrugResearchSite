@@ -22,7 +22,7 @@ const quarterGet = (record) => {
   ].filter((a) => a !== "");
 
   if (dateList.length === 0) return "-";
-  console.log(dateList, record.Ticker);
+  // console.log(dateList, record.Ticker);
 
   const dateString = dateList.reduce((a, b) =>
     new Date(a.MeasureDate) > new Date(b.MeasureDate) ? a : b
@@ -190,7 +190,13 @@ const IndicationComponent = (props) => {
   return (
     <WrapperBox large={props.data.length > 10 ? true : false}>
       <h2>{props.name}</h2>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        rowClassName={(r, i) =>
+          r.Current_Phase.toLowerCase().includes("approved") ? "approved" : null
+        }
+      />
     </WrapperBox>
   );
 };
