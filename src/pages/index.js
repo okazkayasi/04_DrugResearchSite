@@ -22,7 +22,6 @@ import Renal from "../components/icons/renal";
 import Respiratory from "../components/icons/respiratory";
 import Rheumatology from "../components/icons/rheumatology";
 import Urology from "../components/icons/urology";
-import urology from "../components/icons/urology";
 
 const FlexDiv = styled.div`
   display: flex;
@@ -30,7 +29,8 @@ const FlexDiv = styled.div`
 
 const MobileDiv = styled.div`
   display: none;
-  @media (max-width: 768px) {
+  width: 100%;
+  @media (max-width: 666px) {
     display: block;
   }
 `;
@@ -39,7 +39,7 @@ const DropdownDiv = styled.div`
   max-width: 400px;
   width: 80%;
   margin: 30px auto;
-  @media (max-width: 768px) {
+  @media (max-width: 666px) {
     display: none;
   }
 `;
@@ -53,7 +53,7 @@ const BoxesWrapper = styled.div`
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 666px) {
     display: none;
   }
 `;
@@ -94,60 +94,62 @@ const IndexComponent = (props) => {
   const [diseaseGroupText, setDiseaseGroupText] = useState([]);
   console.log(diseaseGroupSelect, "dg");
 
-  const getDistinctData = () => {
-    // all data we get
-    const allData = props.data.allDataCsv.edges.map((edge) => edge.node);
-
-    // make modifications on data
-    allData.forEach((node) => {
-      node.SAB = Math.floor(Math.random() * 4);
-      node.Venture_Funders = Math.floor(Math.random() * 4);
-      node.Public_Holders = Math.floor(Math.random() * 4);
-      node.Target = node.Target.split(",").join(", ");
-      node.Current_Phase =
-        node.Current_Phase === "Approved"
-          ? "FDA Approved 🇺🇸"
-          : node.Current_Phase === "Approved (Generic Competition)"
-          ? "FDA Approved 🇺🇸 Generic"
-          : node.Current_Phase === "Approved in Europe"
-          ? "EMA Approved 🇪🇺"
-          : node.Current_Phase === "Approved in other than U.S./E.U."
-          ? "Approved, Non FDA/EMA"
-          : node.Current_Phase;
-    });
-
-    // get disease groups and counts make them ready for Select
-    const distinctDiseaseGroups = props.data.allDataCsv.distinct;
-    const distinctDiseaseGroupCountData = distinctDiseaseGroups.map((node) => ({
-      name: node,
-      count: [
-        ...new Set(
-          allData
-            .filter((d) => d.Disease_Group === node)
-            .map((d) => d.Indication_Name)
-        ),
-      ].length,
-    }));
-
-    const diseaseGroupText = distinctDiseaseGroupCountData.map((node) => ({
-      value: node.name,
-      label: (
-        <FlexDiv>
-          {iconSvgs.find((d) => d.name === node.name).icon}
-          <p style={{ margin: "0 0 0 10px" }}>
-            {node.name} ({node.count} indications)
-          </p>
-        </FlexDiv>
-      ),
-    }));
-    setDiseaseGroupText(diseaseGroupText);
-
-    setDiseaseGroupSelect(diseaseGroupText[0]);
-    setAllData(allData);
-  };
   useEffect(() => {
+    const getDistinctData = () => {
+      // all data we get
+      const allData = props.data.allDataCsv.edges.map((edge) => edge.node);
+
+      // make modifications on data
+      allData.forEach((node) => {
+        node.SAB = Math.floor(Math.random() * 4);
+        node.Venture_Funders = Math.floor(Math.random() * 4);
+        node.Public_Holders = Math.floor(Math.random() * 4);
+        node.Target = node.Target.split(",").join(", ");
+        node.Current_Phase =
+          node.Current_Phase === "Approved"
+            ? "FDA Approved 🇺🇸"
+            : node.Current_Phase === "Approved (Generic Competition)"
+            ? "FDA Approved 🇺🇸 Generic"
+            : node.Current_Phase === "Approved in Europe"
+            ? "EMA Approved 🇪🇺"
+            : node.Current_Phase === "Approved in other than U.S./E.U."
+            ? "Approved, Non FDA/EMA"
+            : node.Current_Phase;
+      });
+
+      // get disease groups and counts make them ready for Select
+      const distinctDiseaseGroups = props.data.allDataCsv.distinct;
+      const distinctDiseaseGroupCountData = distinctDiseaseGroups.map(
+        (node) => ({
+          name: node,
+          count: [
+            ...new Set(
+              allData
+                .filter((d) => d.Disease_Group === node)
+                .map((d) => d.Indication_Name)
+            ),
+          ].length,
+        })
+      );
+
+      const diseaseGroupText = distinctDiseaseGroupCountData.map((node) => ({
+        value: node.name,
+        label: (
+          <FlexDiv>
+            {iconSvgs.find((d) => d.name === node.name).icon}
+            <p style={{ margin: "0 0 0 10px" }}>
+              {node.name} ({node.count} indications)
+            </p>
+          </FlexDiv>
+        ),
+      }));
+      setDiseaseGroupText(diseaseGroupText);
+
+      setDiseaseGroupSelect(diseaseGroupText[0]);
+      setAllData(allData);
+    };
     getDistinctData();
-  }, []);
+  }, [props.data]);
 
   // data for the page (only one disease group)
   const data = allData.filter(
