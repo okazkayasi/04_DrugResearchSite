@@ -117,11 +117,11 @@ const IndexComponent = (props) => {
         node.Target = node.Target.split(",").join(", ");
         node.Current_Phase =
           node.Current_Phase === "Approved"
-            ? "FDA Approved 🇺🇸"
+            ? "FDA Approved :us:"
             : node.Current_Phase === "Approved (Generic Competition)"
-            ? "FDA Approved 🇺🇸 Generic"
+            ? "FDA Approved :us: Generic"
             : node.Current_Phase === "Approved in Europe"
-            ? "EMA Approved 🇪🇺"
+            ? "EMA Approved :eu:"
             : node.Current_Phase === "Approved in other than U.S./E.U."
             ? "Approved, Non FDA/EMA"
             : node.Current_Phase;
