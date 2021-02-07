@@ -4,6 +4,30 @@ import IndicationComponent from "../components/IndicationComponent/IndicationCom
 import styled from "styled-components";
 import Select from "react-select";
 
+import AutoImmune from "../components/icons/autoimmune";
+import Cardiovascular from "../components/icons/cardiovascular";
+import Dermatology from "../components/icons/dermatology";
+import Endoctrine from "../components/icons/endoctine";
+import EntDenial from "../components/icons/ent-denial";
+import Gastroenterology from "../components/icons/gastroenterology";
+import Hematology from "../components/icons/hematology";
+import Infectious from "../components/icons/infectious";
+import Metabolic from "../components/icons/metabolic";
+import Neurology from "../components/icons/neurology";
+import Obstetrics from "../components/icons/obstetrics";
+import Oncology from "../components/icons/oncology";
+import Ophthalmology from "../components/icons/ophthalmology";
+import Psychiatry from "../components/icons/psychiatry";
+import Renal from "../components/icons/renal";
+import Respiratory from "../components/icons/respiratory";
+import Rheumatology from "../components/icons/rheumatology";
+import Urology from "../components/icons/urology";
+import urology from "../components/icons/urology";
+
+const FlexDiv = styled.div`
+  display: flex;
+`;
+
 const DropdownDiv = styled.div`
   max-width: 400px;
   width: 80%;
@@ -17,6 +41,33 @@ const BoxesWrapper = styled.div`
   margin: auto;
   width: 95vw;
 `;
+
+const iconSvgs = [
+  { name: "Allergy", icon: null },
+  { name: "Autoimmune/immunology", icon: <AutoImmune /> },
+  { name: "Cardiovascular", icon: <Cardiovascular /> },
+  { name: "Dermatology", icon: <Dermatology /> },
+  { name: "ENT/Dental", icon: <EntDenial /> },
+  { name: "Endocrine", icon: <Endoctrine /> },
+  {
+    name: "Gastroenterology (Non Inflammatory Bowel Disease)",
+    icon: <Gastroenterology />,
+  },
+  { name: "Hematology", icon: <Hematology /> },
+  { name: "Infectious Disease", icon: <Infectious /> },
+  { name: "Metabolic", icon: <Metabolic /> },
+  { name: "Neurology", icon: <Neurology /> },
+  { name: "Not Specified", icon: null },
+  { name: "Obstetrics/Gynecology", icon: <Obstetrics /> },
+  { name: "Oncology", icon: <Oncology /> },
+  { name: "Ophthalmology", icon: <Ophthalmology /> },
+  { name: "Orthopedics", icon: null },
+  { name: "Psychiatry", icon: <Psychiatry /> },
+  { name: "Renal", icon: <Renal /> },
+  { name: "Respiratory", icon: <Respiratory /> },
+  { name: "Rheumatology (Non Autoimmune)", icon: <Rheumatology /> },
+  { name: "Urology", icon: <Urology /> },
+];
 
 const IndexComponent = (props) => {
   const [allData, setAllData] = useState([]);
@@ -61,11 +112,20 @@ const IndexComponent = (props) => {
         ),
       ].length,
     }));
+
     const diseaseGroupText = distinctDiseaseGroupCountData.map((node) => ({
       value: node.name,
-      label: `${node.name} (${node.count} indications)`,
+      label: (
+        <FlexDiv>
+          {iconSvgs.find((d) => d.name === node.name).icon}
+          <p style={{ margin: "0 0 0 10px" }}>
+            {node.name} ({node.count} indications)
+          </p>
+        </FlexDiv>
+      ),
     }));
     setDiseaseGroupText(diseaseGroupText);
+
     setDiseaseGroupSelect(diseaseGroupText[0]);
     setAllData(allData);
   };
