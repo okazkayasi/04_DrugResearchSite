@@ -28,10 +28,20 @@ const FlexDiv = styled.div`
   display: flex;
 `;
 
+const MobileDiv = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
 const DropdownDiv = styled.div`
   max-width: 400px;
   width: 80%;
   margin: 30px auto;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const BoxesWrapper = styled.div`
@@ -40,6 +50,12 @@ const BoxesWrapper = styled.div`
   grid-gap: 20px 25px;
   margin: auto;
   width: 95vw;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const iconSvgs = [
@@ -152,18 +168,23 @@ const IndexComponent = (props) => {
   ));
 
   return (
-    <div style={{ paddingBottom: "50px" }}>
-      <DropdownDiv>
-        <Select
-          options={diseaseGroupText}
-          onChange={(e) =>
-            setDiseaseGroupSelect({ value: e.value, label: e.label })
-          }
-          value={diseaseGroupSelect}
-        />
-      </DropdownDiv>
-      <BoxesWrapper>{boxes}</BoxesWrapper>
-    </div>
+    <main>
+      <MobileDiv>
+        <h1>Please use desktop or tablet (landscape) to view this page.</h1>
+      </MobileDiv>
+      <div style={{ paddingBottom: "50px" }}>
+        <DropdownDiv>
+          <Select
+            options={diseaseGroupText}
+            onChange={(e) =>
+              setDiseaseGroupSelect({ value: e.value, label: e.label })
+            }
+            value={diseaseGroupSelect}
+          />
+        </DropdownDiv>
+        <BoxesWrapper>{boxes}</BoxesWrapper>
+      </div>
+    </main>
   );
 };
 
