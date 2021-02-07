@@ -40,13 +40,13 @@ const HeaderDiv = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   margin: 20px auto;
+  @media (max-width: 666px) {
+    display: none;
+  }
 `;
 
 const DropdownWrapper = styled.div`
   width: 100%;
-  @media (max-width: 666px) {
-    display: none;
-  }
 `;
 
 const DropdownDiv = styled.div`
