@@ -50,7 +50,7 @@ const DropdownWrapper = styled.div`
 `;
 
 const DropdownDiv = styled.div`
-  max-width: 400px;
+  max-width: 500px;
   margin: auto;
 `;
 
@@ -139,6 +139,13 @@ const IndexComponent = (props) => {
                 .map((d) => d.Indication_Name)
             ),
           ].length,
+          drugCount: [
+            ...new Set(
+              allData
+                .filter((d) => d.Disease_Group === node)
+                .map((d) => d.Drug_Name)
+            ),
+          ].length,
         })
       );
 
@@ -150,7 +157,8 @@ const IndexComponent = (props) => {
             <FlexDiv>
               {iconSvgs.find((d) => d.name === node.name).icon}
               <p style={{ margin: "0 0 0 10px" }}>
-                {node.name} ({node.count} indications)
+                {node.name} ({node.drugCount} drugs across {node.count}{" "}
+                indications)
               </p>
             </FlexDiv>
           ),
