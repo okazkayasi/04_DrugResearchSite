@@ -142,19 +142,20 @@ const IndexComponent = (props) => {
         })
       );
 
-      const diseaseGroupText = distinctDiseaseGroupCountData.map((node) => ({
-        value: node.name,
-        label: (
-          <FlexDiv>
-            {iconSvgs.find((d) => d.name === node.name).icon}
-            <p style={{ margin: "0 0 0 10px" }}>
-              {node.name} ({node.count} indications)
-            </p>
-          </FlexDiv>
-        ),
-      }));
+      const diseaseGroupText = distinctDiseaseGroupCountData
+        .sort((a, b) => b.count - a.count)
+        .map((node) => ({
+          value: node.name,
+          label: (
+            <FlexDiv>
+              {iconSvgs.find((d) => d.name === node.name).icon}
+              <p style={{ margin: "0 0 0 10px" }}>
+                {node.name} ({node.count} indications)
+              </p>
+            </FlexDiv>
+          ),
+        }));
       setDiseaseGroupText(diseaseGroupText);
-
       setDiseaseGroupSelect(diseaseGroupText[0]);
       setAllData(allData);
     };
@@ -187,6 +188,7 @@ const IndexComponent = (props) => {
       <HeaderDiv>
         <DropdownWrapper>
           <DropdownDiv>
+            <h3>Disease Group</h3>
             <Select
               options={diseaseGroupText}
               onChange={(e) =>
