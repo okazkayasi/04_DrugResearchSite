@@ -36,6 +36,9 @@ const MapWrapper = styled.div`
     padding-top: 5px;
     border-bottom: 1px black solid;
   }
+  td:nth-child(2) {
+    padding-left: 10px;
+  }
   .empty {
     width: 10px;
     padding: 0;
