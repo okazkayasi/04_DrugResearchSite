@@ -152,7 +152,7 @@ const IndexComponent = (props) => {
   ));
 
   return (
-    <div>
+    <div style={{ paddingBottom: "50px" }}>
       <DropdownDiv>
         <Select
           options={diseaseGroupText}
