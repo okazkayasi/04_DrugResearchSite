@@ -12,7 +12,7 @@ import Spray from "../icons/spray";
 import Topical from "../icons/topical";
 
 const quarterMaker = (dateString) => {
-  console.log(dateString, "datestringg");
+  // console.log(dateString, "datestringg");
   if (dateString === "") return -1;
   const year = dateString.split("/")[2].slice(2);
   const month = parseInt(dateString.split("/")[0]);
@@ -120,7 +120,11 @@ const svgSelector = (admin) => {
 };
 
 const IndicationComponent = (props) => {
-  const dataSource = props.data;
+  const dataSource = props.data.sort((a, b) => {
+    if (a.Current_Phase.toLowerCase().includes("approved")) return -1;
+    return 1;
+    // -b.Current_Phase.includes("approved");
+  });
 
   const columns = [
     {
