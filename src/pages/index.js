@@ -22,6 +22,7 @@ import Renal from "../components/icons/renal";
 import Respiratory from "../components/icons/respiratory";
 import Rheumatology from "../components/icons/rheumatology";
 import Urology from "../components/icons/urology";
+import MapLegend from "../components/MapLegend/MapLegend";
 
 const FlexDiv = styled.div`
   display: flex;
@@ -34,14 +35,23 @@ const MobileDiv = styled.div`
     display: block;
   }
 `;
+const HeaderDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  margin: 20px auto;
+`;
 
-const DropdownDiv = styled.div`
-  max-width: 400px;
-  width: 80%;
-  margin: 30px auto;
+const DropdownWrapper = styled.div`
+  width: 100%;
   @media (max-width: 666px) {
     display: none;
   }
+`;
+
+const DropdownDiv = styled.div`
+  max-width: 400px;
+  margin: auto;
 `;
 
 const BoxesWrapper = styled.div`
@@ -174,16 +184,21 @@ const IndexComponent = (props) => {
       <MobileDiv>
         <h1>Please use desktop or tablet (landscape) to view this page.</h1>
       </MobileDiv>
+      <HeaderDiv>
+        <DropdownWrapper>
+          <DropdownDiv>
+            <Select
+              options={diseaseGroupText}
+              onChange={(e) =>
+                setDiseaseGroupSelect({ value: e.value, label: e.label })
+              }
+              value={diseaseGroupSelect}
+            />
+          </DropdownDiv>
+        </DropdownWrapper>
+        <MapLegend />
+      </HeaderDiv>
       <div style={{ paddingBottom: "50px" }}>
-        <DropdownDiv>
-          <Select
-            options={diseaseGroupText}
-            onChange={(e) =>
-              setDiseaseGroupSelect({ value: e.value, label: e.label })
-            }
-            value={diseaseGroupSelect}
-          />
-        </DropdownDiv>
         <BoxesWrapper>{boxes}</BoxesWrapper>
       </div>
     </main>
