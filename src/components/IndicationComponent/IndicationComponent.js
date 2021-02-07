@@ -11,6 +11,17 @@ import Pill from "../icons/Pill";
 import Spray from "../icons/spray";
 import Topical from "../icons/topical";
 
+const quarterMaker = (dateString) => {
+  console.log(dateString, "datestringg");
+  if (dateString === "") return -1;
+  const year = dateString.split("/")[2].slice(2);
+  const month = parseInt(dateString.split("/")[0]);
+  const quarter =
+    month <= 3 ? "1Q" : month <= 6 ? "2Q" : month <= 9 ? "3Q" : "4Q";
+
+  return quarter + year;
+};
+
 const quarterGet = (record) => {
   const dateList = [
     record.Phase_I_Date,
@@ -29,12 +40,15 @@ const quarterGet = (record) => {
   );
 
   if (!dateString) return "";
-  const year = dateString.split("/")[2].slice(2);
-  const month = parseInt(dateString.split("/")[0]);
-  const quarter =
-    month <= 3 ? "1Q" : month <= 6 ? "2Q" : month <= 9 ? "3Q" : "4Q";
+  return quarterMaker(dateString);
+};
 
-  return quarter + year;
+const quarterComparer = (record) => {
+  const val = quarterGet(record);
+  if (val === "-") return 0;
+  const year = val.slice(2);
+  const quarter = val[0];
+  return parseInt(year + quarter);
 };
 
 const WrapperBox = styled.div`
@@ -114,18 +128,33 @@ const IndicationComponent = (props) => {
       dataIndex: "Current_Phase",
       key: "Current_Phase",
       width: "10px",
+      filters: [...new Set(dataSource.map((a) => a.Current_Phase))].map(
+        (item) => ({
+          text: item,
+          value: item,
+        })
+      ),
+      onFilter: (value, record) => record.Current_Phase === value,
     },
     {
       title: "Latest Data",
       key: "Latest_Data",
       render: (text, record) => quarterGet(record),
       width: "10px",
+      sorter: (a, b) => quarterComparer(a) - quarterComparer(b),
+      sortDirections: ["descend", "ascend"],
     },
+
     {
       title: "Molecule",
       dataIndex: "Molecule",
       key: "Molecule",
       width: "10px",
+      filters: [...new Set(dataSource.map((a) => a.Molecule))].map((item) => ({
+        text: item,
+        value: item,
+      })),
+      onFilter: (value, record) => record.Molecule === value,
     },
     {
       title: "Admin",
@@ -154,6 +183,7 @@ const IndicationComponent = (props) => {
       dataIndex: "Ticker",
       key: "Ticker",
       width: "10px",
+      sorter: (a, b) => a.Ticker.localeCompare(b.Ticker),
     },
     {
       title: "SAB",
@@ -164,6 +194,7 @@ const IndicationComponent = (props) => {
         </ColoredDiv>
       ),
       width: "10px",
+      sorter: (a, b) => a.SAB - b.SAB,
     },
     {
       title: "Venture Funders",
@@ -174,6 +205,7 @@ const IndicationComponent = (props) => {
         </ColoredDiv>
       ),
       width: "10px",
+      sorter: (a, b) => a.Venture_Funders - b.Venture_Funders,
     },
     {
       title: "Public Holders",
@@ -184,6 +216,7 @@ const IndicationComponent = (props) => {
         </ColoredDiv>
       ),
       width: "10px",
+      sorter: (a, b) => a.Public_Holders - b.Public_Holders,
     },
   ];
 
