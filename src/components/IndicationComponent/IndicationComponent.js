@@ -168,7 +168,10 @@ const IndicationComponent = (props) => {
     },
     {
       title: "Target",
-      dataIndex: "Target",
+      render: (text, record) =>
+        record.Target.length > 50
+          ? record.Target.slice(0, 50) + "..."
+          : record.Target,
       key: "Target",
       width: 10,
     },

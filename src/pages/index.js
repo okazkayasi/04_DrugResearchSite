@@ -1,8 +1,10 @@
 import { graphql } from "gatsby";
+import { Radio } from "antd";
 import React, { useState, useEffect } from "react";
 import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
 import styled from "styled-components";
 import Select from "react-select";
+import "./index.css";
 
 import AutoImmune from "../components/icons/autoimmune";
 import Cardiovascular from "../components/icons/cardiovascular";
@@ -35,11 +37,18 @@ const MobileDiv = styled.div`
     display: block;
   }
 `;
+
+const HeaderWrapper = styled.div`
+  margin: 20px auto;
+  text-align: center;
+`;
+
 const HeaderDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   margin: 20px auto;
+  text-align: left;
   @media (max-width: 666px) {
     display: none;
   }
@@ -50,8 +59,12 @@ const DropdownWrapper = styled.div`
 `;
 
 const DropdownDiv = styled.div`
-  max-width: 500px;
+  max-width: 700px;
   margin: auto;
+`;
+const RadioDiv = styled.div`
+  max-width: 700px;
+  margin: 20px auto;
 `;
 
 const BoxesWrapper = styled.div`
@@ -97,6 +110,7 @@ const iconSvgs = [
 
 const IndexComponent = (props) => {
   const [allData, setAllData] = useState([]);
+  const [alphabetic, setAlphabetic] = useState(false);
   const [diseaseGroupSelect, setDiseaseGroupSelect] = useState({
     value: "",
     label: "",
@@ -178,36 +192,69 @@ const IndexComponent = (props) => {
   // get indication names for this disease group and create data
   const indicationNames = data.map((node) => node.Indication_Name);
   const distinctIndicationNames = [...new Set(indicationNames)];
-  const distintIndicationData = distinctIndicationNames.map((name) => ({
-    name: name,
-    data: data.filter((node) => node.Indication_Name === name),
-  }));
+  const distintIndicationData = distinctIndicationNames.map((name) => {
+    const indicationData = data.filter((node) => node.Indication_Name === name);
+    return {
+      name: name,
+      data: indicationData,
+      approvedCount: indicationData.filter((node) =>
+        node.Current_Phase.toLowerCase().includes("approved")
+      ).length,
+    };
+  });
 
   // create components for each indication data
-  const boxes = distintIndicationData.map((x) => (
-    <IndicationComponent name={x.name} data={x.data} key={x.name} />
-  ));
+  const boxes = distintIndicationData
+    .sort((a, b) => {
+      if (alphabetic) {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.approvedCount - a.approvedCount;
+      }
+    })
+    .map((x) => (
+      <IndicationComponent name={x.name} data={x.data} key={x.name} />
+    ));
+
+  const onRadioChange = (e) => {
+    console.log("radio checked", e.target.value);
+    setAlphabetic(e.target.value);
+  };
 
   return (
     <main>
       <MobileDiv>
         <h1>Please use desktop or tablet (landscape) to view this page.</h1>
       </MobileDiv>
-      <HeaderDiv>
-        <DropdownWrapper>
-          <DropdownDiv>
-            <h3>Disease Group</h3>
-            <Select
-              options={diseaseGroupText}
-              onChange={(e) =>
-                setDiseaseGroupSelect({ value: e.value, label: e.label })
-              }
-              value={diseaseGroupSelect}
-            />
-          </DropdownDiv>
-        </DropdownWrapper>
-        <MapLegend />
-      </HeaderDiv>
+      <HeaderWrapper>
+        <h1>Peptide Therapeutics Landscape</h1>
+        <h2>Non Blood Sugar and Infectious Diseases</h2>
+        <HeaderDiv>
+          <DropdownWrapper>
+            <DropdownDiv>
+              <h3>Disease Group</h3>
+              <Select
+                options={diseaseGroupText}
+                onChange={(e) =>
+                  setDiseaseGroupSelect({ value: e.value, label: e.label })
+                }
+                value={diseaseGroupSelect}
+              />
+            </DropdownDiv>
+            <RadioDiv>
+              <Radio.Group
+                defaultValue={false}
+                // buttonStyle="solid"
+                onChange={onRadioChange}
+              >
+                <Radio.Button value={false}>Default</Radio.Button>
+                <Radio.Button value={true}>Alphabetic</Radio.Button>
+              </Radio.Group>
+            </RadioDiv>
+          </DropdownWrapper>
+          <MapLegend />
+        </HeaderDiv>
+      </HeaderWrapper>
       <div style={{ paddingBottom: "50px" }}>
         <BoxesWrapper>{boxes}</BoxesWrapper>
       </div>

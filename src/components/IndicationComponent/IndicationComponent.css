@@ -2,6 +2,11 @@
   font-size: 12px;
 }
 
+.ant-table-tbody > tr > td {
+  height: 100px;
+  padding: 4px;
+}
+
 .approved {
   background-color: #50bbe9;
   font-size: 12px;
