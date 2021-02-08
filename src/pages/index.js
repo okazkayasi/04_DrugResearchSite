@@ -244,14 +244,14 @@ const IndexComponent = (props) => {
               />
             </DropdownDiv>
             <RadioDiv>
-              <h3>Sort:</h3>
+              <h3>Sort Indications</h3>
               <Radio.Group
                 defaultValue={false}
                 // buttonStyle="solid"
                 onChange={onRadioChange}
               >
-                <Radio.Button value={false}>Default</Radio.Button>
-                <Radio.Button value={true}>Alphabetic</Radio.Button>
+                <Radio.Button value={false}>Most Approvals</Radio.Button>
+                <Radio.Button value={true}>Alphabetical</Radio.Button>
               </Radio.Group>
             </RadioDiv>
           </DropdownWrapper>
