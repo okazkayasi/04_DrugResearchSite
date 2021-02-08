@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
 import styled from "styled-components";
 import Select from "react-select";
+import emojiFlags from "emoji-flags";
 import "./index.css";
 
 import AutoImmune from "../components/icons/autoimmune";
@@ -131,11 +132,13 @@ const IndexComponent = (props) => {
         node.Target = node.Target.split(",").join(", ");
         node.Current_Phase =
           node.Current_Phase === "Approved"
-            ? "FDA Approved 🇺🇸"
+            ? "FDA Approved " + emojiFlags.countryCode("US").emoji || ""
             : node.Current_Phase === "Approved (Generic Competition)"
-            ? "FDA Approved 🇺🇸 Generic"
+            ? "FDA Approved " +
+              (emojiFlags.countryCode("US").emoji || "") +
+              " Generic"
             : node.Current_Phase === "Approved in Europe"
-            ? "EMA Approved 🇪🇺"
+            ? "EMA Approved " + emojiFlags.countryCode("EU").emoji || ""
             : node.Current_Phase === "Approved in other than U.S./E.U."
             ? "Approved, Non FDA/EMA"
             : node.Current_Phase;
