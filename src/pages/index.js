@@ -237,7 +237,9 @@ const IndexComponent = (props) => {
             <DropdownDiv>
               <h3>Disease Group</h3>
               <Select
-                menuPortalTarget={document.body || null}
+                menuPortalTarget={
+                  typeof document === "undefined" || document.body
+                }
                 menuPosition={"fixed"}
                 options={diseaseGroupText}
                 onChange={(e) =>
