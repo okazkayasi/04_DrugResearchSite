@@ -242,6 +242,7 @@ const IndexComponent = (props) => {
               />
             </DropdownDiv>
             <RadioDiv>
+              <h3>Sort:</h3>
               <Radio.Group
                 defaultValue={false}
                 // buttonStyle="solid"
