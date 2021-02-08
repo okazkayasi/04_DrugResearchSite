@@ -147,6 +147,7 @@ const IndicationComponent = (props) => {
       width: "10px",
       sorter: (a, b) => quarterComparer(a) - quarterComparer(b),
       sortDirections: ["descend", "ascend"],
+      align: "center",
     },
 
     {
@@ -159,6 +160,7 @@ const IndicationComponent = (props) => {
         value: item,
       })),
       onFilter: (value, record) => record.Molecule === value,
+      align: "center",
     },
     {
       title: "Admin",
@@ -191,6 +193,7 @@ const IndicationComponent = (props) => {
       key: "Ticker",
       width: "10px",
       sorter: (a, b) => a.Ticker.localeCompare(b.Ticker),
+      align: "center",
     },
     {
       title: "SAB",
@@ -202,6 +205,7 @@ const IndicationComponent = (props) => {
       ),
       width: "10px",
       sorter: (a, b) => a.SAB - b.SAB,
+      align: "center",
     },
     {
       title: "Venture Funders",
@@ -213,6 +217,7 @@ const IndicationComponent = (props) => {
       ),
       width: "10px",
       sorter: (a, b) => a.Venture_Funders - b.Venture_Funders,
+      align: "center",
     },
     {
       title: "Public Holders",
@@ -224,6 +229,7 @@ const IndicationComponent = (props) => {
       ),
       width: "10px",
       sorter: (a, b) => a.Public_Holders - b.Public_Holders,
+      align: "center",
     },
   ];
 
