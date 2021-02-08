@@ -114,9 +114,9 @@ const svgSelector = (admin) => {
     selectionSvg = <Spray />;
   else if (admin.split(", ").find((ad) => topicalList.includes(ad)))
     selectionSvg = <Topical />;
-  else if (admin === "N/A") selectionSvg = <p>{`-`}</p>;
+  else if (admin === "N/A") selectionSvg = <p>{`?`}</p>;
   else selectionSvg = admin;
-  return selectionSvg || "-----";
+  return selectionSvg || "?";
 };
 
 const IndicationComponent = (props) => {
@@ -229,7 +229,9 @@ const IndicationComponent = (props) => {
 
   return (
     <WrapperBox large={props.data.length > 10 ? true : false}>
-      <h2>{props.name}</h2>
+      <h2>
+        {props.name} ({props.data.length} drugs)
+      </h2>
       <Table
         dataSource={dataSource}
         columns={columns}
