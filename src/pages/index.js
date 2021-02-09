@@ -1,11 +1,12 @@
+import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { graphql } from "gatsby";
 import { Radio } from "antd";
-import React, { useState, useEffect } from "react";
 import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
+import "./index.css";
 import styled from "styled-components";
 import Select from "react-select";
 import emojiFlags from "emoji-flags";
-import "./index.css";
 
 import AutoImmune from "../components/icons/autoimmune";
 import Cardiovascular from "../components/icons/cardiovascular";
@@ -225,48 +226,54 @@ const IndexComponent = (props) => {
   };
 
   return (
-    <main>
-      <MobileDiv>
-        <h1>Please use desktop or tablet (landscape) to view this page.</h1>
-      </MobileDiv>
-      <HeaderWrapper>
-        <h1>Peptide Therapeutics Landscape</h1>
-        <h2>Non Blood Sugar and Infectious Diseases</h2>
-        <HeaderDiv>
-          <DropdownWrapper>
-            <DropdownDiv>
-              <h3>Disease Group</h3>
-              <Select
-                menuPortalTarget={
-                  typeof document === "undefined" || document.body
-                }
-                menuPosition={"fixed"}
-                options={diseaseGroupText}
-                onChange={(e) =>
-                  setDiseaseGroupSelect({ value: e.value, label: e.label })
-                }
-                value={diseaseGroupSelect}
-              />
-            </DropdownDiv>
-            <RadioDiv>
-              <h3>Sort Indications</h3>
-              <Radio.Group
-                defaultValue={false}
-                // buttonStyle="solid"
-                onChange={onRadioChange}
-              >
-                <Radio.Button value={false}>Most Approvals</Radio.Button>
-                <Radio.Button value={true}>Alphabetical</Radio.Button>
-              </Radio.Group>
-            </RadioDiv>
-          </DropdownWrapper>
-          <MapLegend />
-        </HeaderDiv>
-      </HeaderWrapper>
-      <div style={{ paddingBottom: "50px" }}>
-        <BoxesWrapper>{boxes}</BoxesWrapper>
-      </div>
-    </main>
+    <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Drug Research</title>
+      </Helmet>
+      <main>
+        <MobileDiv>
+          <h1>Please use desktop or tablet (landscape) to view this page.</h1>
+        </MobileDiv>
+        <HeaderWrapper>
+          <h1>Peptide Therapeutics Landscape</h1>
+          <h2>Non Blood Sugar and Infectious Diseases</h2>
+          <HeaderDiv>
+            <DropdownWrapper>
+              <DropdownDiv>
+                <h3>Disease Group</h3>
+                <Select
+                  menuPortalTarget={
+                    typeof document === "undefined" || document.body
+                  }
+                  menuPosition={"fixed"}
+                  options={diseaseGroupText}
+                  onChange={(e) =>
+                    setDiseaseGroupSelect({ value: e.value, label: e.label })
+                  }
+                  value={diseaseGroupSelect}
+                />
+              </DropdownDiv>
+              <RadioDiv>
+                <h3>Sort Indications</h3>
+                <Radio.Group
+                  defaultValue={false}
+                  // buttonStyle="solid"
+                  onChange={onRadioChange}
+                >
+                  <Radio.Button value={false}>Most Approvals</Radio.Button>
+                  <Radio.Button value={true}>Alphabetical</Radio.Button>
+                </Radio.Group>
+              </RadioDiv>
+            </DropdownWrapper>
+            <MapLegend />
+          </HeaderDiv>
+        </HeaderWrapper>
+        <div style={{ paddingBottom: "50px" }}>
+          <BoxesWrapper>{boxes}</BoxesWrapper>
+        </div>
+      </main>
+    </div>
   );
 };
 
