@@ -71,7 +71,7 @@ const RadioDiv = styled.div`
 
 const BoxesWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 20px 25px;
   margin: auto;
   width: 95vw;
@@ -112,6 +112,7 @@ const iconSvgs = [
 
 const IndexComponent = (props) => {
   const [allData, setAllData] = useState([]);
+  const [allNewData, setAllNewData] = useState([]);
   const [alphabetic, setAlphabetic] = useState(false);
   const [diseaseGroupSelect, setDiseaseGroupSelect] = useState({
     value: "",
@@ -124,9 +125,29 @@ const IndexComponent = (props) => {
     const getDistinctData = () => {
       // all data we get
       const allData = props.data.allDataCsv.edges.map((edge) => edge.node);
-
+      const allNewData = props.data.allIndicationsCsv.edges.map(
+        (edge) => edge.node
+      );
       // make modifications on data
       allData.forEach((node) => {
+        node.SAB = Math.floor(Math.random() * 4);
+        node.Venture_Funders = Math.floor(Math.random() * 4);
+        node.Public_Holders = Math.floor(Math.random() * 4);
+        node.Target = node.Target.split(",").join(", ");
+        node.Current_Phase =
+          node.Current_Phase === "Approved"
+            ? "FDA Approved " + emojiFlags.countryCode("US").emoji || ""
+            : node.Current_Phase === "Approved (Generic Competition)"
+            ? "FDA Approved " +
+              (emojiFlags.countryCode("US").emoji || "") +
+              " Generic"
+            : node.Current_Phase === "Approved in Europe"
+            ? "EMA Approved " + emojiFlags.countryCode("EU").emoji || ""
+            : node.Current_Phase === "Approved in other than U.S./E.U."
+            ? "Approved, Non FDA/EMA"
+            : node.Current_Phase;
+      });
+      allNewData.forEach((node) => {
         node.SAB = Math.floor(Math.random() * 4);
         node.Venture_Funders = Math.floor(Math.random() * 4);
         node.Public_Holders = Math.floor(Math.random() * 4);
@@ -181,9 +202,11 @@ const IndexComponent = (props) => {
             </FlexDiv>
           ),
         }));
+
       setDiseaseGroupText(diseaseGroupText);
       setDiseaseGroupSelect(diseaseGroupText[0]);
       setAllData(allData);
+      setAllNewData(allNewData);
     };
     getDistinctData();
   }, [props.data]);
@@ -192,20 +215,29 @@ const IndexComponent = (props) => {
   const data = allData.filter(
     (node) => node.Disease_Group === diseaseGroupSelect.value
   );
-
+  const newData = allNewData.filter(
+    (node) => node.Disease_Group === diseaseGroupSelect.value
+  );
+  console.log(newData);
   // get indication names for this disease group and create data
   const indicationNames = data.map((node) => node.Indication_Name);
   const distinctIndicationNames = [...new Set(indicationNames)];
   const distintIndicationData = distinctIndicationNames.map((name) => {
     const indicationData = data.filter((node) => node.Indication_Name === name);
+    const newIndicationData = newData.filter(
+      (node) => node.Indication_Name === name
+    );
     return {
       name: name,
       data: indicationData,
+      newData: newIndicationData,
       approvedCount: indicationData.filter((node) =>
         node.Current_Phase.toLowerCase().includes("approved")
       ).length,
     };
   });
+
+  console.log(distintIndicationData, "dataaa");
 
   // create components for each indication data
   const boxes = distintIndicationData
@@ -217,7 +249,12 @@ const IndexComponent = (props) => {
       }
     })
     .map((x) => (
-      <IndicationComponent name={x.name} data={x.data} key={x.name} />
+      <IndicationComponent
+        name={x.name}
+        data={x.data}
+        key={x.name}
+        newData={x.newData}
+      />
     ));
 
   const onRadioChange = (e) => {
@@ -302,6 +339,27 @@ export const IndexQuery = graphql`
         }
       }
       distinct(field: Disease_Group)
+    }
+    allIndicationsCsv {
+      edges {
+        node {
+          Disease_Group
+          Current_Phase
+          Indication_Name
+          Phase_I_Event_Date
+          Phase_I_Date
+          Phase_II_Event_Date
+          Phase_II_Date
+          Phase_III_Event_Date
+          Phase_III_Date
+          Molecule
+          Route_of_Administration
+          Target
+          Lead_Company_Name
+          Drug_Name
+          Ticker
+        }
+      }
     }
   }
 `;

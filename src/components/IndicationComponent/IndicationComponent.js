@@ -56,6 +56,14 @@ const WrapperBox = styled.div`
   border-radius: 20px;
   padding: 30px 10px;
   min-height: ${(props) => (props.large ? "1176px" : "unset")};
+  h2 {
+    text-align: center;
+  }
+`;
+
+const TableContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ColoredDiv = styled.div`
@@ -121,6 +129,11 @@ const svgSelector = (admin) => {
 
 const IndicationComponent = (props) => {
   const dataSource = props.data.sort((a, b) => {
+    if (a.Current_Phase.toLowerCase().includes("approved")) return -1;
+    return 1;
+    // -b.Current_Phase.includes("approved");
+  });
+  const newDataSource = props.newData.sort((a, b) => {
     if (a.Current_Phase.toLowerCase().includes("approved")) return -1;
     return 1;
     // -b.Current_Phase.includes("approved");
@@ -195,6 +208,10 @@ const IndicationComponent = (props) => {
       sorter: (a, b) => a.Ticker.localeCompare(b.Ticker),
       align: "center",
     },
+  ];
+
+  const columnsAdded = [
+    ...columns,
     {
       title: "SAB",
       key: "SAB",
@@ -238,13 +255,34 @@ const IndicationComponent = (props) => {
       <h2>
         {props.name} ({props.data.length} drugs)
       </h2>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        rowClassName={(r, i) =>
-          r.Current_Phase.toLowerCase().includes("approved") ? "approved" : null
-        }
-      />
+      <TableContainer>
+        <div>
+          <h3>Peptides and Peptidomimetics</h3>
+          <Table
+            dataSource={dataSource}
+            columns={columnsAdded}
+            rowClassName={(r, i) =>
+              r.Current_Phase.toLowerCase().includes("approved")
+                ? "approved"
+                : null
+            }
+          />
+        </div>
+        {newDataSource.length > 0 && (
+          <div>
+            <h3>Other Modalities</h3>
+            <Table
+              dataSource={newDataSource}
+              columns={columns}
+              rowClassName={(r, i) =>
+                r.Current_Phase.toLowerCase().includes("approved")
+                  ? "approved"
+                  : null
+              }
+            />
+          </div>
+        )}
+      </TableContainer>
     </WrapperBox>
   );
 };
