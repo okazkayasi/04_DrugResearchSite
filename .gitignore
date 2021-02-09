@@ -3,3 +3,7 @@ node_modules/
 public
 
 *.csv#
+
+src/data/IndicationsAll.csv
+
+src/data/dataAll.csv
