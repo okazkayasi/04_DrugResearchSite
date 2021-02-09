@@ -252,12 +252,10 @@ const IndicationComponent = (props) => {
 
   return (
     <WrapperBox large={props.data.length > 10 ? true : false}>
-      <h2>
-        {props.name} ({props.data.length} drugs)
-      </h2>
+      <h2>{props.name}</h2>
       <TableContainer>
         <div>
-          <h3>Peptides and Peptidomimetics</h3>
+          <h3>Peptides and Peptidomimetics ({props.data.length} drugs)</h3>
           <Table
             dataSource={dataSource}
             columns={columnsAdded}
@@ -270,7 +268,7 @@ const IndicationComponent = (props) => {
         </div>
         {newDataSource.length > 0 && (
           <div>
-            <h3>Other Modalities</h3>
+            <h3>Other Modalities ({newDataSource.length} drugs)</h3>
             <Table
               dataSource={newDataSource}
               columns={columns}
