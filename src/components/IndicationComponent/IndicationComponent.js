@@ -63,7 +63,7 @@ const WrapperBox = styled.div`
 
 const TableContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 25px;
 `;
 
 const ColoredDiv = styled.div`
