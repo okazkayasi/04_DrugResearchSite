@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { graphql } from "gatsby";
 import { Radio } from "antd";
-import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
-import "./index.css";
 import styled from "styled-components";
 import Select from "react-select";
 import emojiFlags from "emoji-flags";
 
+import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
+import MapLegend from "../components/MapLegend/MapLegend";
+import "./index.css";
+
+import Allergy from "../components/icons/allergy";
 import AutoImmune from "../components/icons/autoimmune";
 import Cardiovascular from "../components/icons/cardiovascular";
 import Dermatology from "../components/icons/dermatology";
@@ -26,7 +29,7 @@ import Renal from "../components/icons/renal";
 import Respiratory from "../components/icons/respiratory";
 import Rheumatology from "../components/icons/rheumatology";
 import Urology from "../components/icons/urology";
-import MapLegend from "../components/MapLegend/MapLegend";
+import NotSpecified from "../components/icons/not-specified";
 
 const FlexDiv = styled.div`
   display: flex;
@@ -84,7 +87,7 @@ const BoxesWrapper = styled.div`
 `;
 
 const iconSvgs = [
-  { name: "Allergy", icon: null },
+  { name: "Allergy", icon: <Allergy /> },
   { name: "Autoimmune/immunology", icon: <AutoImmune /> },
   { name: "Cardiovascular", icon: <Cardiovascular /> },
   { name: "Dermatology", icon: <Dermatology /> },
@@ -98,7 +101,7 @@ const iconSvgs = [
   { name: "Infectious Disease", icon: <Infectious /> },
   { name: "Metabolic", icon: <Metabolic /> },
   { name: "Neurology", icon: <Neurology /> },
-  { name: "Not Specified", icon: null },
+  { name: "Not Specified", icon: <NotSpecified /> },
   { name: "Obstetrics/Gynecology", icon: <Obstetrics /> },
   { name: "Oncology", icon: <Oncology /> },
   { name: "Ophthalmology", icon: <Ophthalmology /> },
