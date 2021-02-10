@@ -10,6 +10,8 @@ import IV from "../icons/IV";
 import Pill from "../icons/Pill";
 import Spray from "../icons/spray";
 import Topical from "../icons/topical";
+import UsFlag from "../icons/us-flag";
+import EuFlag from "../icons/eu-flag";
 
 const quarterMaker = (dateString) => {
   // console.log(dateString, "datestringg");
@@ -64,6 +66,11 @@ const WrapperBox = styled.div`
 const TableContainer = styled.div`
   display: flex;
   gap: 25px;
+`;
+
+const PhaseP = styled.p`
+  margin: 0;
+  padding: 0;
 `;
 
 const ColoredDiv = styled.div`
@@ -142,7 +149,31 @@ const IndicationComponent = (props) => {
   const columns = [
     {
       title: "Phase",
-      dataIndex: "Current_Phase",
+      render: (text, node) => {
+        const phase =
+          node.Current_Phase === "Approved" ? (
+            <>
+              <PhaseP>FDA Approved</PhaseP>
+              <UsFlag />
+            </>
+          ) : node.Current_Phase === "Approved (Generic Competition)" ? (
+            <>
+              <PhaseP>FDA Approved</PhaseP>
+              <UsFlag />
+              <PhaseP>Generic</PhaseP>
+            </>
+          ) : node.Current_Phase === "Approved in Europe" ? (
+            <>
+              <PhaseP>EMA Approved</PhaseP>
+              <EuFlag />
+            </>
+          ) : node.Current_Phase === "Approved in other than U.S./E.U." ? (
+            <PhaseP>Approved, Non FDA/EMA</PhaseP>
+          ) : (
+            node.Current_Phase
+          );
+        return phase;
+      },
       key: "Current_Phase",
       width: "10px",
       filters: [...new Set(dataSource.map((a) => a.Current_Phase))].map(
