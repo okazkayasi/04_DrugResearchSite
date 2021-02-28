@@ -269,7 +269,7 @@ const IndexComponent = (props) => {
     <div>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Drug Research</title>
+        <title>Peptide Therapeutics Landscape</title>
       </Helmet>
       <main>
         <MobileDiv>
