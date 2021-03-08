@@ -122,7 +122,6 @@ const IndexComponent = (props) => {
     label: "",
   });
   const [diseaseGroupText, setDiseaseGroupText] = useState([]);
-  console.log(diseaseGroupSelect, "dg");
 
   useEffect(() => {
     const getDistinctData = () => {
@@ -131,42 +130,25 @@ const IndexComponent = (props) => {
       const allNewData = props.data.allIndicationsCsv.edges.map(
         (edge) => edge.node
       );
+      const allRatings = {};
+      props.data.allRatingCsv.edges.forEach((edge) => {
+        allRatings[edge.node.Company] = edge.node;
+      });
+
       // make modifications on data
       allData.forEach((node) => {
-        node.SAB = Math.floor(Math.random() * 4);
-        node.Venture_Funders = Math.floor(Math.random() * 4);
+        node.SAB = parseInt(allRatings[node.Lead_Company_Name]?.SAB || -1);
+        node.Venture_Funders = parseInt(
+          allRatings[node.Lead_Company_Name]?.Venture_Funders || -1
+        );
         node.Public_Holders = Math.floor(Math.random() * 4);
         node.Target = node.Target.split(",").join(", ");
-        // node.Current_Phase =
-        //   node.Current_Phase === "Approved"
-        //     ? "FDA Approved " + emojiFlags.countryCode("US").emoji || ""
-        //     : node.Current_Phase === "Approved (Generic Competition)"
-        //     ? "FDA Approved " +
-        //       (emojiFlags.countryCode("US").emoji || "") +
-        //       " Generic"
-        //     : node.Current_Phase === "Approved in Europe"
-        //     ? "EMA Approved " + emojiFlags.countryCode("EU").emoji || ""
-        //     : node.Current_Phase === "Approved in other than U.S./E.U."
-        //     ? "Approved, Non FDA/EMA"
-        //     : node.Current_Phase;
       });
       allNewData.forEach((node) => {
-        node.SAB = Math.floor(Math.random() * 4);
-        node.Venture_Funders = Math.floor(Math.random() * 4);
-        node.Public_Holders = Math.floor(Math.random() * 4);
+        //   node.SAB = Math.floor(Math.random() * 4);
+        //   node.Venture_Funders = Math.floor(Math.random() * 4);
+        //   node.Public_Holders = Math.floor(Math.random() * 4);
         node.Target = node.Target.split(",").join(", ");
-        // node.Current_Phase =
-        //   node.Current_Phase === "Approved"
-        //     ? "FDA Approved " + emojiFlags.countryCode("US").emoji || ""
-        //     : node.Current_Phase === "Approved (Generic Competition)"
-        //     ? "FDA Approved " +
-        //       (emojiFlags.countryCode("US").emoji || "") +
-        //       " Generic"
-        //     : node.Current_Phase === "Approved in Europe"
-        //     ? "EMA Approved " + emojiFlags.countryCode("EU").emoji || ""
-        //     : node.Current_Phase === "Approved in other than U.S./E.U."
-        //     ? "Approved, Non FDA/EMA"
-        //     : node.Current_Phase;
       });
 
       // get disease groups and counts make them ready for Select
@@ -221,7 +203,6 @@ const IndexComponent = (props) => {
   const newData = allNewData.filter(
     (node) => node.Disease_Group === diseaseGroupSelect.value
   );
-  console.log(newData);
   // get indication names for this disease group and create data
   const indicationNames = data.map((node) => node.Indication_Name);
   const distinctIndicationNames = [...new Set(indicationNames)];
@@ -239,8 +220,6 @@ const IndexComponent = (props) => {
       ).length,
     };
   });
-
-  console.log(distintIndicationData, "dataaa");
 
   // create components for each indication data
   const boxes = distintIndicationData
@@ -261,7 +240,6 @@ const IndexComponent = (props) => {
     ));
 
   const onRadioChange = (e) => {
-    console.log("radio checked", e.target.value);
     setAlphabetic(e.target.value);
   };
 
@@ -343,6 +321,17 @@ export const IndexQuery = graphql`
       }
       distinct(field: Disease_Group)
     }
+
+    allRatingCsv {
+      edges {
+        node {
+          Company
+          SAB
+          Venture_Funders
+        }
+      }
+    }
+
     allIndicationsCsv {
       edges {
         node {

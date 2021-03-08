@@ -248,7 +248,7 @@ const IndicationComponent = (props) => {
       key: "SAB",
       render: (text, record) => (
         <ColoredDiv level={record.SAB}>
-          <p>{record.SAB}</p>
+          <p>{isNaN(record.SAB) ? "-" : record.SAB}</p>
         </ColoredDiv>
       ),
       width: "10px",
@@ -260,7 +260,7 @@ const IndicationComponent = (props) => {
       key: "Venture_Funders",
       render: (text, record) => (
         <ColoredDiv level={record.Venture_Funders}>
-          <p>{record.Venture_Funders}</p>
+          <p>{isNaN(record.Venture_Funders) ? "-" : record.Venture_Funders}</p>
         </ColoredDiv>
       ),
       width: "10px",
