@@ -138,6 +138,7 @@ const IndexComponent = (props) => {
       // make modifications on data
       allData.forEach((node) => {
         node.SAB = parseInt(allRatings[node.Lead_Company_Name]?.SAB || -1);
+        node.SAB_Link = allRatings[node.Lead_Company_Name]?.SAB_Link || "";
         node.Venture_Funders = parseInt(
           allRatings[node.Lead_Company_Name]?.Venture_Funders || -1
         );
@@ -328,6 +329,7 @@ export const IndexQuery = graphql`
           Company
           SAB
           Venture_Funders
+          SAB_Link
         }
       }
     }

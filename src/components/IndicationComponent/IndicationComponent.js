@@ -74,6 +74,7 @@ const PhaseP = styled.p`
 `;
 
 const ColoredDiv = styled.div`
+  cursor: pointer;
   background-color: ${(props) =>
     props.level === 3 ? "#34FF23" : props.level === 2 ? "#EAF990" : "#E84941"};
   border-radius: 2px;
@@ -81,6 +82,43 @@ const ColoredDiv = styled.div`
   height: 20px;
   text-align: center;
   margin: auto;
+  box-sizing: border-box;
+  &:hover {
+    border: 2px solid black;
+    width: 22px;
+    height: 22px;
+  }
+  a {
+    color: black;
+    text-decoration: none;
+    &:hover {
+      color: black;
+    }
+  }
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+
+      /* Position the tooltip text - see examples below! */
+      position: absolute;
+      z-index: 1;
+    }
+    &:hover {
+      .tooltiptext {
+        visibility: visible;
+      }
+    }
+  }
 `;
 
 const svgSelector = (admin) => {
@@ -248,7 +286,16 @@ const IndicationComponent = (props) => {
       key: "SAB",
       render: (text, record) => (
         <ColoredDiv level={record.SAB}>
-          <p>{isNaN(record.SAB) ? "-" : record.SAB}</p>
+          {record.SAB_Link.startsWith("http") ? (
+            <a href={record.SAB_Link} target="_blank">
+              <p>{isNaN(record.SAB) ? "-" : record.SAB}</p>
+            </a>
+          ) : (
+            <div className="tooltip">
+              <p>{isNaN(record.SAB) ? "-" : record.SAB}</p>
+              <span className="tooltiptext">No link for SAB</span>
+            </div>
+          )}
         </ColoredDiv>
       ),
       width: "10px",
