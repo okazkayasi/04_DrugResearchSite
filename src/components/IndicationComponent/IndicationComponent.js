@@ -76,7 +76,13 @@ const PhaseP = styled.p`
 const ColoredDiv = styled.div`
   cursor: pointer;
   background-color: ${(props) =>
-    props.level === 3 ? "#34FF23" : props.level === 2 ? "#EAF990" : "#E84941"};
+    props.level === 3
+      ? "#34FF23"
+      : props.level === 2
+      ? "#EAF990"
+      : props.level === 1 || props.level === 0
+      ? "#E84941"
+      : "gray"};
   border-radius: 2px;
   width: 20px;
   height: 20px;
@@ -287,7 +293,7 @@ const IndicationComponent = (props) => {
       render: (text, record) => (
         <ColoredDiv level={record.SAB}>
           {record.SAB_Link.startsWith("http") ? (
-            <a href={record.SAB_Link} target="_blank">
+            <a href={record.SAB_Link} target="_blank" rel="noreferrer">
               <p>{isNaN(record.SAB) ? "-" : record.SAB}</p>
             </a>
           ) : (
