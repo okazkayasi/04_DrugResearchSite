@@ -50,94 +50,96 @@ const MapLegend = (props) => (
   <MapWrapper>
     <h2>MAP LEGEND</h2>
     <table>
-      <tr>
-        <th colspan={3}>ROUTE OF ADMINISTRATION</th>
-        <th colspan={2}>QUALITY OF SAB, VC FUNDERS & PUBLIC HOLDERS</th>
-      </tr>
-      <tr>
-        <td>
-          <Pill />
-        </td>
-        <td>Oral (PO)</td>
-        <td className="empty"></td>
-        <td>
-          <ColoredDiv level={1}>
-            <p>1</p>
-          </ColoredDiv>
-        </td>
-        <td>Low Quality</td>
-      </tr>
-      <tr>
-        <td>
-          <Injection />
-        </td>
-        <td>Injection (including IM, SQ)</td>
-        <td className="empty"></td>
-        <td>
-          <ColoredDiv level={2}>
-            <p>2</p>
-          </ColoredDiv>
-        </td>
-        <td>Average Quality</td>
-      </tr>
-      <tr>
-        <td>
-          <IV />
-        </td>
-        <td>Intravenous (IV)</td>
-        <td className="empty"></td>
-        <td>
-          <ColoredDiv level={3}>
-            <p>3</p>
-          </ColoredDiv>
-        </td>
-        <td>High Quality</td>
-      </tr>
-      <tr>
-        <td>
-          <Spray />
-        </td>
-        <td>Intranasal</td>
-        <td className="empty"></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
-          <Inhaler />
-        </td>
-        <td>Inhaled</td>
-        <td className="empty"></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
-          <Topical />
-        </td>
-        <td>Topical</td>
-        <td className="empty"></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
-          <Drop />
-        </td>
-        <td>Intraocular</td>
-        <td className="empty"></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
-          <Standard />
-        </td>
-        <td>Standard of Care</td>
-        <td className="empty"></td>
-        <td></td>
-        <td></td>
-      </tr>
+      <tbody>
+        <tr>
+          <th colSpan={3}>ROUTE OF ADMINISTRATION</th>
+          <th colSpan={2}>QUALITY OF SAB, VC FUNDERS & PUBLIC HOLDERS</th>
+        </tr>
+        <tr>
+          <td>
+            <Pill />
+          </td>
+          <td>Oral (PO)</td>
+          <td className="empty"></td>
+          <td>
+            <ColoredDiv level={1}>
+              <p>1</p>
+            </ColoredDiv>
+          </td>
+          <td>Low Quality</td>
+        </tr>
+        <tr>
+          <td>
+            <Injection />
+          </td>
+          <td>Injection (including IM, SQ)</td>
+          <td className="empty"></td>
+          <td>
+            <ColoredDiv level={2}>
+              <p>2</p>
+            </ColoredDiv>
+          </td>
+          <td>Average Quality</td>
+        </tr>
+        <tr>
+          <td>
+            <IV />
+          </td>
+          <td>Intravenous (IV)</td>
+          <td className="empty"></td>
+          <td>
+            <ColoredDiv level={3}>
+              <p>3</p>
+            </ColoredDiv>
+          </td>
+          <td>High Quality</td>
+        </tr>
+        <tr>
+          <td>
+            <Spray />
+          </td>
+          <td>Intranasal</td>
+          <td className="empty"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <Inhaler />
+          </td>
+          <td>Inhaled</td>
+          <td className="empty"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <Topical />
+          </td>
+          <td>Topical</td>
+          <td className="empty"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <Drop />
+          </td>
+          <td>Intraocular</td>
+          <td className="empty"></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <Standard />
+          </td>
+          <td>Standard of Care</td>
+          <td className="empty"></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
     </table>
   </MapWrapper>
 );

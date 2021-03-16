@@ -4,7 +4,6 @@ import { graphql } from "gatsby";
 import { Radio } from "antd";
 import styled from "styled-components";
 import Select from "react-select";
-import emojiFlags from "emoji-flags";
 
 import IndicationComponent from "../components/IndicationComponent/IndicationComponent";
 import MapLegend from "../components/MapLegend/MapLegend";
