@@ -141,7 +141,7 @@ const IndexComponent = (props) => {
         node.Venture_Funders = parseInt(
           allRatings[node.Lead_Company_Name]?.Venture_Funders || -1
         );
-        node.Public_Holders = Math.floor(Math.random() * 4);
+        node.Public_Holders = Math.floor(Math.random() * 3) + 1;
         node.Target = node.Target.split(",").join(", ");
       });
       allNewData.forEach((node) => {
