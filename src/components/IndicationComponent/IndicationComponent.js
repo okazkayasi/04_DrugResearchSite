@@ -313,7 +313,24 @@ const IndicationComponent = (props) => {
       key: "Venture_Funders",
       render: (text, record) => (
         <ColoredDiv level={record.Venture_Funders}>
-          <p>{isNaN(record.Venture_Funders) ? "-" : record.Venture_Funders}</p>
+          {record.Venture_Funders_Link.startsWith("http") ? (
+            <a
+              href={record.Venture_Funders_Link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <p>
+                {isNaN(record.Venture_Funders) ? "-" : record.Venture_Funders}
+              </p>
+            </a>
+          ) : (
+            <div className="tooltip">
+              <p>
+                {isNaN(record.Venture_Funders) ? "-" : record.Venture_Funders}
+              </p>
+              <span className="tooltiptext">No link for Venture Funders</span>
+            </div>
+          )}
         </ColoredDiv>
       ),
       width: "10px",
@@ -325,7 +342,24 @@ const IndicationComponent = (props) => {
       key: "Public_Holders",
       render: (text, record) => (
         <ColoredDiv level={record.Public_Holders}>
-          <p>{record.Public_Holders}</p>
+          {record.Public_Holders_Link.startsWith("http") ? (
+            <a
+              href={record.Public_Holders_Link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <p>
+                {isNaN(record.Public_Holders) ? "-" : record.Public_Holders}
+              </p>
+            </a>
+          ) : (
+            <div className="tooltip">
+              <p>
+                {isNaN(record.Public_Holders) ? "-" : record.Public_Holders}
+              </p>
+              <span className="tooltiptext">No link for Public Holders</span>
+            </div>
+          )}
         </ColoredDiv>
       ),
       width: "10px",

@@ -141,7 +141,12 @@ const IndexComponent = (props) => {
         node.Venture_Funders = parseInt(
           allRatings[node.Lead_Company_Name]?.Venture_Funders || -1
         );
+        node.Venture_Funders_Link =
+          allRatings[node.Lead_Company_Name]?.Crunchbase_URL || "";
         node.Public_Holders = Math.floor(Math.random() * 3) + 1;
+        node.Public_Holders_Link =
+          allRatings[node.Lead_Company_Name]?.Whale_URL || "";
+
         node.Target = node.Target.split(",").join(", ");
       });
       allNewData.forEach((node) => {
@@ -329,6 +334,8 @@ export const IndexQuery = graphql`
           SAB
           Venture_Funders
           SAB_Link
+          Whale_URL
+          Crunchbase_URL
         }
       }
     }
