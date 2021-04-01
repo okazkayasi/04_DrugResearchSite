@@ -37,8 +37,14 @@ const GraphPage = (props) => {
         <h1>Graphs</h1>
       </HeaderWrapper>
       <GraphsWrapper>
-        <GraphComponent data={ae1data} field="AE1" />
-        <GraphComponent data={ae2data} field="AE2" />
+        {chartData.length > 0 ? (
+          <>
+            <GraphComponent data={ae1data} field="AE1" />
+            <GraphComponent data={ae2data} field="AE2" />
+          </>
+        ) : (
+          <></>
+        )}
       </GraphsWrapper>
     </div>
   );

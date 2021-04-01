@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as d3 from "d3";
 
 import "./GraphComponent.css";
@@ -80,8 +80,9 @@ const chartBuilder = (data, field) => {
 
 const GraphComponent = ({ data, field }) => {
   // data.Revenue = data.Revenue.map(x=>)
-
-  chartBuilder(data, field);
+  useEffect(() => {
+    chartBuilder(data, field);
+  }, [data, field]);
 
   return (
     <div className="graph-container">
