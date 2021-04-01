@@ -32,20 +32,39 @@ const chartBuilder = (data, field) => {
     .range([0, width]);
   const y = d3
     .scaleLog()
-    .domain([10, d3.max(data.map((x) => x.Revenue))])
+    .domain([10, d3.max(data.map((x) => 10000))])
     .range([height, 0]);
 
   console.log(y(200));
+
+  const xAxis2 = d3.axisBottom(x).ticks(6);
+  const yAxis2 = d3.axisLeft(y).ticks(3);
+
+  svg
+    .append("g")
+    .attr("class", "grid grid-x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis2.tickSize(-height).tickFormat(""));
+
+  svg
+    .append("g")
+    .attr("class", "grid grid-y")
+    .call(yAxis2.tickSize(-width).tickFormat(""));
+
+  svg.select(".grid-y").select("path").remove();
+
+  svg.selectAll(".grid").selectAll("line").attr("stroke", "lightgray");
+
+  svg
+    .append("g")
+    .call(d3.axisLeft(y).ticks(3, (d) => "$" + d3.format(",.0f")(d) + "M"));
 
   svg
     .append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x).ticks(6, ".0%"));
-  svg
-    .append("g")
-    .call(d3.axisLeft(y).ticks(6, (d) => "$" + d3.format(",.0f")(d)));
 
-  svg.selectAll(".tick").selectAll("line").remove();
+  // svg.selectAll(".tick").selectAll("line").remove();
 
   svg
     .append("g")
