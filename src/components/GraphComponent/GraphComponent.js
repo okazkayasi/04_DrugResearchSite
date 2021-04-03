@@ -5,7 +5,7 @@ import "./GraphComponent.css";
 
 const margin = { top: 20, right: 20, bottom: 30, left: 100 },
   width = 960 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+  height = 1000 - margin.top - margin.bottom;
 
 const chartBuilder = (data, field) => {
   data.forEach((item) => {
@@ -34,8 +34,6 @@ const chartBuilder = (data, field) => {
     .scaleLog()
     .domain([10, d3.max(data.map((x) => 10000))])
     .range([height, 0]);
-
-  console.log(y(200));
 
   const xAxis2 = d3.axisBottom(x).ticks(6);
   const yAxis2 = d3.axisLeft(y).ticks(3);
@@ -68,14 +66,88 @@ const chartBuilder = (data, field) => {
 
   svg
     .append("g")
-    .selectAll("dot")
+    .selectAll("circle")
     .data(data)
     .enter()
     .append("circle")
     .attr("cx", (d) => x(d.xVals))
-    .attr("cy", (d) => y(d.Revenue))
-    .attr("r", 2.5)
+    .attr("cy", (d) => {
+      const getY = y(d.Revenue);
+      if (isNaN(getY)) return height;
+      return y(d.Revenue);
+    })
+    .attr("r", 4)
     .style("fill", "blue");
+
+  svg
+    .append("g")
+    .selectAll(".line")
+    .data(data)
+    .enter()
+    .append("line")
+    .attr("class", "line")
+    .attr("x1", (d) => x(d.xVals))
+    .attr("x2", (d) => x(d.xVals) + 15)
+    .attr("y1", (d) => {
+      if (isNaN(y(d.Revenue))) return height;
+      return y(d.Revenue);
+    })
+    .attr("y2", (d) => {
+      if (isNaN(y(d.Revenue))) return height - 15;
+      return y(d.Revenue) - 15;
+    })
+    .attr("stroke", "gray");
+
+  svg
+    .append("g")
+    .selectAll(".text")
+    .data(data)
+    .enter()
+    .append("text")
+    .attr("class", "text")
+    .attr("x", (d) => x(d.xVals) + 5)
+    .attr("y", (d) => {
+      if (isNaN(y(d.Revenue))) return height - 15;
+      return y(d.Revenue) - 15;
+    })
+    .attr("dx", ".71em")
+    .attr("dy", ".35em")
+    .text((d) => d.Drug_Name);
+
+  const blackBoxData = data.filter((x) => x["Black_Box"] === "Yes");
+  const remsData = data.filter((x) => x["REMS"] === "Yes");
+
+  const boxLen = 14;
+  svg
+    .append("g")
+    .selectAll("rect")
+    .data(blackBoxData)
+    .enter()
+    .append("rect")
+    .attr("x", (d) => x(d.xVals) - boxLen / 2)
+    .attr("y", (d) => {
+      if (isNaN(y(d.Revenue))) return height - boxLen / 2;
+      return y(d.Revenue) - boxLen / 2;
+    })
+    .attr("width", boxLen)
+    .attr("height", boxLen)
+    .style("fill", "black");
+
+  svg
+    .append("g")
+    .selectAll(".rems")
+    .data(remsData)
+    .enter()
+    .append("circle")
+    .attr("class", "rems")
+    .attr("cx", (d) => x(d.xVals))
+    .attr("cy", (d) => {
+      if (isNaN(y(d.Revenue))) return height;
+      return y(d.Revenue);
+    })
+    .attr("r", boxLen / 2 - 1)
+    .attr("stroke", "#E84941")
+    .style("stroke-width", 2);
 };
 
 const GraphComponent = ({ data, field }) => {
