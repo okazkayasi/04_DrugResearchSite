@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 import "./GraphComponent.css";
 
-const margin = { top: 20, right: 20, bottom: 80, left: 100 },
+const margin = { top: 20, right: 120, bottom: 80, left: 100 },
   width = 960 - margin.left - margin.right,
   height = 1000 - margin.top - margin.bottom;
 
@@ -49,7 +49,7 @@ const chartBuilder = (data, field) => {
     .style("font-size", 28)
     .text(() =>
       field !== "AE1"
-        ? "Percent of patients with AE's in active arm (more than placebo)"
+        ? "Percent increase in AE’s in active arm versus placebo arm"
         : "Percent of patients in active arm with AE’s"
     );
 
@@ -89,6 +89,78 @@ const chartBuilder = (data, field) => {
 
   // svg.selectAll(".tick").selectAll("line").remove();
 
+  function mouseOverHandler(that, d) {
+    // Add interactivity
+    console.log(d, that);
+    // Use D3 to select element, change color and size
+    d3.select(that).attr("r", "5");
+
+    var tooltip2 = d3
+      .select("#chartAE1")
+      .append("div")
+      .attr("class", "tooltip")
+      .attr("id", field + d.Drug_Name + "-tooltip")
+      .style("position", "absolute")
+      .style("background-color", "white")
+      .style("border", "solid")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px")
+      .style("top", y(d.Revenue) + margin.top + "px")
+      .style("left", x(d.xVals) + margin.left + "px")
+      .html(
+        `
+        <h3 class='tooltip-revenue'>${
+          "$" + d.Revenue.toLocaleString("en", { useGrouping: true }) + "M"
+        }</h3>
+        <h4 class='tooltip-title'>${d.Drug_Name}</h4>
+        <a href='${d.Label_URL}'> 
+          Open Link
+        </a>
+        <table class='tooltip-table'>
+          <tbody>
+            <tr>
+              <td>Modality: </td>
+              <td>${d.Modality}</td>
+            </tr>
+            <tr>
+              <td>Target 1: </td>
+              <td>${d.Target_1}</td>
+            </tr>
+            <tr>
+              <td>Target 2: </td>
+              <td>${d.Target_2 ? d.Target_2 : "-"}</td>
+            </tr>
+            <tr>
+              <td>Target 3: </td>
+              <td>${d.Target_3 ? d.Target_3 : "-"}</td>
+            </tr>
+            <tr>
+              <td>Target 4: </td>
+              <td>${d.Target_4 ? d.Target_4 : "-"}</td>
+            </tr>
+            <tr>
+              <td>Disease Group(s): </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Indication(s): </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Route(s) of Administration: </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Company: </td>
+              <td>${d.Company_Name}</td>
+            </tr>
+          <tbody>
+        </table>
+        `
+      );
+  }
+
   svg
     .append("g")
     .selectAll("circle")
@@ -102,7 +174,11 @@ const chartBuilder = (data, field) => {
       return y(d.Revenue);
     })
     .attr("r", 4)
-    .style("fill", "blue");
+    .style("fill", "blue")
+    .on("mouseover", function (e, d) {
+      // console.log(d);
+      mouseOverHandler(this, d);
+    });
 
   svg
     .append("g")
@@ -177,7 +253,7 @@ const chartBuilder = (data, field) => {
 
 const legendBuilder = () => {};
 
-const GraphComponent = ({ data, field }) => {
+const GraphComponent = ({ title, data, field }) => {
   // data.Revenue = data.Revenue.map(x=>)
   useEffect(() => {
     chartBuilder(data, field);
@@ -186,7 +262,7 @@ const GraphComponent = ({ data, field }) => {
 
   return (
     <div className="graph-container">
-      <h2>{field}</h2>
+      <h2>{title}</h2>
       <div className="graph-wrapper" id={"chart" + field}></div>
       <div className="legend-wrapper">
         <table>

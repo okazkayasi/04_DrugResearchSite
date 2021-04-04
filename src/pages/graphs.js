@@ -11,7 +11,7 @@ const HeaderWrapper = styled.div`
 const GraphsWrapper = styled.div`
   display: flex;
   width: 100%;
-  * {
+  div {
     &:not(:first-child) {
       margin-left: 50px;
     }
@@ -42,8 +42,16 @@ const GraphPage = (props) => {
       <GraphsWrapper>
         {chartData.length > 0 ? (
           <>
-            <GraphComponent data={ae1data} field="AE1" />
-            <GraphComponent data={ae2data} field="AE2" />
+            <GraphComponent
+              title="Absolute Measure (FDA label data)"
+              data={ae1data}
+              field="AE1"
+            />
+            <GraphComponent
+              title="Relative Measure (FDA label data)"
+              data={ae2data}
+              field="AE2"
+            />
           </>
         ) : (
           <></>
@@ -69,6 +77,11 @@ export const IndexQuery = graphql`
           Revenue
           AE1
           AE2
+          Target_1
+          Target_2
+          Target_3
+          Target_4
+          Modality
         }
       }
     }

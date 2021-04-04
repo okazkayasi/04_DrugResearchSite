@@ -1,7 +1,9 @@
 .graph-container {
   text-align: center;
 }
-
+.graph-wrapper {
+  position: relative;
+}
 .legend-wrapper {
   margin-bottom: 200px;
 }
@@ -26,4 +28,28 @@
 
 .legend-wrapper th {
   padding-bottom: 8px;
+}
+
+.tooltip-revenue {
+  text-align: left;
+}
+
+.tooltip-title {
+  text-align: left;
+  margin-left: 0 !important;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.tooltip a {
+  display: block;
+  text-align: left;
+  color: blue;
+  text-decoration: underline;
+}
+.tooltip-table {
+  border-collapse: none;
+}
+.tooltip-table tr {
+  text-align: left;
 }
