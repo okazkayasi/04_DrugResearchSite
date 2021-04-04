@@ -47,7 +47,6 @@ const chartBuilder = (data, field) => {
     )
     .style("text-anchor", "middle")
     .style("font-size", 28)
-    .style("fill", "#BE2033")
     .text(() =>
       field !== "AE1"
         ? "Percent of patients with AE's in active arm (more than placebo)"
@@ -61,7 +60,6 @@ const chartBuilder = (data, field) => {
     .attr("x", 0 - height / 2)
     .attr("dy", "1em")
     .style("font-size", 28)
-    .style("fill", "#BE2033")
     .style("text-anchor", "middle")
     .text("Worldwide revenue (log scale)");
 
