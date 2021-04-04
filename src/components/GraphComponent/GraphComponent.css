@@ -1,3 +1,29 @@
 .graph-container {
   text-align: center;
 }
+
+.legend-wrapper {
+  margin-bottom: 200px;
+}
+
+.legend-wrapper table {
+  margin: auto;
+  border-spacing: 0 8px;
+}
+
+.legend-wrapper tr:last-child {
+  border-bottom: 1px solid black;
+}
+.legend-wrapper tr + tr {
+  border-top: 1px solid black;
+}
+
+.legend-wrapper td + td {
+  padding: 5px 0;
+  text-align: start;
+  padding-left: 20px;
+}
+
+.legend-wrapper th {
+  padding-bottom: 8px;
+}

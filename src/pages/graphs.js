@@ -12,6 +12,9 @@ const GraphsWrapper = styled.div`
   display: flex;
   width: 100%;
   * {
+    &:not(:first-child) {
+      margin-left: 50px;
+    }
     flex-grow: 1;
   }
 `;

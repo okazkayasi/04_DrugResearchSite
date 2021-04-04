@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 import "./GraphComponent.css";
 
-const margin = { top: 20, right: 20, bottom: 30, left: 100 },
+const margin = { top: 20, right: 20, bottom: 80, left: 100 },
   width = 960 - margin.left - margin.right,
   height = 1000 - margin.top - margin.bottom;
 
@@ -37,6 +37,33 @@ const chartBuilder = (data, field) => {
 
   const xAxis2 = d3.axisBottom(x).ticks(6);
   const yAxis2 = d3.axisLeft(y).ticks(3);
+
+  // text label for the x axis
+  svg
+    .append("text")
+    .attr(
+      "transform",
+      "translate(" + width / 2 + " ," + (height + margin.top + 30) + ")"
+    )
+    .style("text-anchor", "middle")
+    .style("font-size", 28)
+    .style("fill", "#BE2033")
+    .text(() =>
+      field !== "AE1"
+        ? "Percent of patients with AE's in active arm (more than placebo)"
+        : "Percent of patients in active arm with AE’s"
+    );
+
+  svg
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - height / 2)
+    .attr("dy", "1em")
+    .style("font-size", 28)
+    .style("fill", "#BE2033")
+    .style("text-anchor", "middle")
+    .text("Worldwide revenue (log scale)");
 
   svg
     .append("g")
@@ -150,16 +177,52 @@ const chartBuilder = (data, field) => {
     .style("stroke-width", 2);
 };
 
+const legendBuilder = () => {};
+
 const GraphComponent = ({ data, field }) => {
   // data.Revenue = data.Revenue.map(x=>)
   useEffect(() => {
     chartBuilder(data, field);
+    legendBuilder();
   }, [data, field]);
 
   return (
     <div className="graph-container">
       <h2>{field}</h2>
       <div className="graph-wrapper" id={"chart" + field}></div>
+      <div className="legend-wrapper">
+        <table>
+          <tbody>
+            <tr>
+              <th colSpan="2">Legend</th>
+            </tr>
+            <tr>
+              <td>
+                <img src="/images/BlackREM.svg" />
+              </td>
+              <td>Black Box & REMS</td>
+            </tr>
+            <tr>
+              <td>
+                <img src="/images/Black.svg" />
+              </td>
+              <td>Black Box</td>
+            </tr>
+            <tr>
+              <td>
+                <img src="/images/REM.svg" />
+              </td>
+              <td>REMS</td>
+            </tr>
+            <tr>
+              <td>
+                <img src="/images/BlueDot.svg" />
+              </td>
+              <td>No Black Box or REMS</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
