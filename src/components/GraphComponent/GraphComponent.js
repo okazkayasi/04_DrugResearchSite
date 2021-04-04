@@ -198,25 +198,25 @@ const GraphComponent = ({ data, field }) => {
             </tr>
             <tr>
               <td>
-                <img src="/images/BlackREM.svg" />
+                <img src="/images/BlackREM.svg" alt="black rem" />
               </td>
               <td>Black Box & REMS</td>
             </tr>
             <tr>
               <td>
-                <img src="/images/Black.svg" />
+                <img src="/images/Black.svg" alt="black" />
               </td>
               <td>Black Box</td>
             </tr>
             <tr>
               <td>
-                <img src="/images/REM.svg" />
+                <img src="/images/REM.svg" alt="rem" />
               </td>
               <td>REMS</td>
             </tr>
             <tr>
               <td>
-                <img src="/images/BlueDot.svg" />
+                <img src="/images/BlueDot.svg" alt="bluedot" />
               </td>
               <td>No Black Box or REMS</td>
             </tr>
