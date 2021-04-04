@@ -24,8 +24,42 @@ const GraphPage = (props) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
+    const chartDataMap = {};
+
     const chartData = props.data.allChartdataCsv.edges.map((edge) => edge.node);
-    setChartData(chartData);
+    chartData.forEach((d) => {
+      chartDataMap[d.Drug_Name] = d;
+      chartDataMap[d.Drug_Name]["Disease_Group"] = [];
+      chartDataMap[d.Drug_Name]["Indication_Name"] = [];
+      chartDataMap[d.Drug_Name]["Route_Of_Administration"] = [];
+    });
+    const otherdata = props.data.allOtherDataCsv.edges.map((edge) => edge.node);
+    otherdata.forEach((d) => {
+      d.Disease_Group &&
+        chartDataMap[d.Drug_Name]["Disease_Group"].indexOf(d.Disease_Group) ===
+          -1 &&
+        chartDataMap[d.Drug_Name]["Disease_Group"].push(d.Disease_Group);
+      d.Indication_Name &&
+        chartDataMap[d.Drug_Name]["Indication_Name"].indexOf(
+          d.Indication_Name
+        ) === -1 &&
+        chartDataMap[d.Drug_Name]["Indication_Name"].push(d.Indication_Name);
+      d.Route_Of_Administration &&
+        chartDataMap[d.Drug_Name]["Route_Of_Administration"].indexOf(
+          d.Route_Of_Administration
+        ) === -1 &&
+        chartDataMap[d.Drug_Name]["Route_Of_Administration"].push(
+          d.Route_Of_Administration
+        );
+    });
+    const newChartData = [];
+    for (const data in chartDataMap) {
+      newChartData.push(chartDataMap[data]);
+    }
+    // console.log(chartDataMap);
+    // console.log(otherdata);
+    console.log(newChartData);
+    setChartData(newChartData);
   }, [props.data.allChartdataCsv.edges]);
 
   const ae1data = chartData.filter((x) => x.AE1 !== "" && x.AE1 !== "NoData");
@@ -82,6 +116,16 @@ export const IndexQuery = graphql`
           Target_3
           Target_4
           Modality
+        }
+      }
+    }
+    allOtherDataCsv {
+      edges {
+        node {
+          Drug_Name
+          Disease_Group
+          Indication_Name
+          Route_of_Administration
         }
       }
     }

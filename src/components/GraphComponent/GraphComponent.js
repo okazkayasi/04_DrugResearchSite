@@ -99,64 +99,83 @@ const chartBuilder = (data, field) => {
       .select("#chartAE1")
       .append("div")
       .attr("class", "tooltip")
-      .attr("id", field + d.Drug_Name + "-tooltip")
+      .attr("id", field + d.Drug_ID + "-tooltip")
       .style("position", "absolute")
-      .style("background-color", "white")
-      .style("border", "solid")
-      .style("border-width", "1px")
-      .style("border-radius", "5px")
-      .style("padding", "10px")
+      .style("margin-left", "0")
+      .style("background-color", "transparent")
+      .style("padding-left", "20px")
+      .style("padding-top", "20px")
       .style("top", y(d.Revenue) + margin.top + "px")
       .style("left", x(d.xVals) + margin.left + "px")
+      .on("mouseover", function () {
+        d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+          "visibility",
+          "visible"
+        );
+      })
+      .on("mouseout", function () {
+        d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+          "visibility",
+          "hidden"
+        );
+      })
       .html(
         `
-        <h3 class='tooltip-revenue'>${
-          "$" + d.Revenue.toLocaleString("en", { useGrouping: true }) + "M"
-        }</h3>
-        <h4 class='tooltip-title'>${d.Drug_Name}</h4>
-        <a href='${d.Label_URL}'> 
-          Open Link
-        </a>
-        <table class='tooltip-table'>
-          <tbody>
-            <tr>
-              <td>Modality: </td>
-              <td>${d.Modality}</td>
-            </tr>
-            <tr>
-              <td>Target 1: </td>
-              <td>${d.Target_1}</td>
-            </tr>
-            <tr>
-              <td>Target 2: </td>
-              <td>${d.Target_2 ? d.Target_2 : "-"}</td>
-            </tr>
-            <tr>
-              <td>Target 3: </td>
-              <td>${d.Target_3 ? d.Target_3 : "-"}</td>
-            </tr>
-            <tr>
-              <td>Target 4: </td>
-              <td>${d.Target_4 ? d.Target_4 : "-"}</td>
-            </tr>
-            <tr>
-              <td>Disease Group(s): </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Indication(s): </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Route(s) of Administration: </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Company: </td>
-              <td>${d.Company_Name}</td>
-            </tr>
-          <tbody>
-        </table>
+        <div style="border: solid; 
+                    border-width: 1px; 
+                    border-radius: 5px; 
+                    background-color: #C4C4C4;
+                    padding: 10px;
+                    "
+
+          <h3 class='tooltip-revenue'>${
+            "$" + d.Revenue.toLocaleString("en", { useGrouping: true }) + "M"
+          }</h3>
+          <h4 class='tooltip-title'>${d.Drug_Name}</h4>
+          <a href='${d.Label_URL}'> 
+            Open Link
+          </a>
+          <table class='tooltip-table'>
+            <tbody>
+              <tr>
+                <td>Modality: </td>
+                <td>${d.Modality}</td>
+              </tr>
+              <tr>
+                <td>Target 1: </td>
+                <td>${d.Target_1}</td>
+              </tr>
+              <tr>
+                <td>Target 2: </td>
+                <td>${d.Target_2 ? d.Target_2 : "-"}</td>
+              </tr>
+              <tr>
+                <td>Target 3: </td>
+                <td>${d.Target_3 ? d.Target_3 : "-"}</td>
+              </tr>
+              <tr>
+                <td>Target 4: </td>
+                <td>${d.Target_4 ? d.Target_4 : "-"}</td>
+              </tr>
+              <tr>
+                <td>Disease Group(s): </td>
+                <td>${d.Disease_Group.join("-")}</td>
+              </tr>
+              <tr>
+                <td>Indication(s): </td>
+                <td>${d.Indication_Name.join("-")}</td>
+                </tr>
+                <tr>
+                <td>Route(s) of Administration: </td>
+                <td>${d.Route_Of_Administration.join("-")}</td>
+              </tr>
+              <tr>
+                <td>Company: </td>
+                <td>${d.Company_Name}</td>
+              </tr>
+            <tbody>
+          </table>
+        </div>
         `
       );
   }
@@ -177,7 +196,20 @@ const chartBuilder = (data, field) => {
     .style("fill", "blue")
     .on("mouseover", function (e, d) {
       // console.log(d);
-      mouseOverHandler(this, d);
+      if (document.getElementById(field + d.Drug_ID + "-tooltip")) {
+        d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+          "visibility",
+          "visible"
+        );
+      } else {
+        mouseOverHandler(this, d);
+      }
+    })
+    .on("mouseout", function (e, d) {
+      d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+        "visibility",
+        "hidden"
+      );
     });
 
   svg
@@ -232,7 +264,24 @@ const chartBuilder = (data, field) => {
     })
     .attr("width", boxLen)
     .attr("height", boxLen)
-    .style("fill", "black");
+    .style("fill", "black")
+    .on("mouseover", function (e, d) {
+      // console.log(d);
+      if (document.getElementById(field + d.Drug_ID + "-tooltip")) {
+        d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+          "visibility",
+          "visible"
+        );
+      } else {
+        mouseOverHandler(this, d);
+      }
+    })
+    .on("mouseout", function (e, d) {
+      d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+        "visibility",
+        "hidden"
+      );
+    });
 
   svg
     .append("g")
@@ -248,7 +297,24 @@ const chartBuilder = (data, field) => {
     })
     .attr("r", boxLen / 2 - 1)
     .attr("stroke", "#E84941")
-    .style("stroke-width", 2);
+    .style("stroke-width", 2)
+    .on("mouseover", function (e, d) {
+      // console.log(d);
+      if (document.getElementById(field + d.Drug_ID + "-tooltip")) {
+        d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+          "visibility",
+          "visible"
+        );
+      } else {
+        mouseOverHandler(this, d);
+      }
+    })
+    .on("mouseout", function (e, d) {
+      d3.select("#" + field + d.Drug_ID + "-tooltip").style(
+        "visibility",
+        "hidden"
+      );
+    });
 };
 
 const legendBuilder = () => {};
