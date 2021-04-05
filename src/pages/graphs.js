@@ -119,7 +119,7 @@ export const IndexQuery = graphql`
         }
       }
     }
-    allOtherDataCsv {
+    allOtherdataCsv {
       edges {
         node {
           Drug_Name
