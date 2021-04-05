@@ -28,7 +28,7 @@ const chartBuilder = (data, field) => {
 
   const x = d3
     .scaleLinear()
-    .domain([0, d3.max(data.map((x) => 0.3))])
+    .domain([0, field === "AE2" ? 1 : 0.3])
     .range([0, width]);
   const y = d3
     .scaleLog()
@@ -96,7 +96,7 @@ const chartBuilder = (data, field) => {
     d3.select(that).attr("r", "5");
 
     var tooltip2 = d3
-      .select("#chartAE1")
+      .select("#chart" + field)
       .append("div")
       .attr("class", "tooltip")
       .attr("id", field + d.Drug_ID + "-tooltip")
