@@ -229,7 +229,12 @@ const chartBuilder = (data, field) => {
       if (isNaN(y(d.Revenue))) return height - 15;
       return y(d.Revenue) - 15;
     })
-    .attr("stroke", "gray");
+    .attr("stroke", (d) => {
+      if (d.REMS === "Yes" || d.Black_Box === "Yes") {
+        return "gray";
+      }
+      return "transparent";
+    });
 
   svg
     .append("g")
@@ -245,7 +250,13 @@ const chartBuilder = (data, field) => {
     })
     .attr("dx", ".71em")
     .attr("dy", ".35em")
-    .text((d) => d.Drug_Name);
+    .attr("font-size", 8)
+    .text((d) => {
+      if (d.REMS === "Yes" || d.Black_Box === "Yes") {
+        return d.Drug_Name;
+      }
+      return "";
+    });
 
   const blackBoxData = data.filter((x) => x["Black_Box"] === "Yes");
   const remsData = data.filter((x) => x["REMS"] === "Yes");
