@@ -71,7 +71,7 @@ const GraphPage = (props) => {
         <title>Peptide Therapeutics Landscape</title>
       </Helmet>
       <HeaderWrapper>
-        <h1>Graphs</h1>
+        <h1>Revenue and AE Rates for Approved Drugs with GPCR Targets</h1>
       </HeaderWrapper>
       <GraphsWrapper>
         {chartData.length > 0 ? (
