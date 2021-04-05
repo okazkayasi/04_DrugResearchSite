@@ -33,7 +33,7 @@ const GraphPage = (props) => {
       chartDataMap[d.Drug_Name]["Indication_Name"] = [];
       chartDataMap[d.Drug_Name]["Route_Of_Administration"] = [];
     });
-    const otherdata = props.data.allOtherDataCsv.edges.map((edge) => edge.node);
+    const otherdata = props.data.allOtherdataCsv.edges.map((edge) => edge.node);
     otherdata.forEach((d) => {
       d.Disease_Group &&
         chartDataMap[d.Drug_Name]["Disease_Group"].indexOf(d.Disease_Group) ===
