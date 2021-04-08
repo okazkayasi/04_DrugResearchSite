@@ -31,7 +31,7 @@ const GraphPage = (props) => {
       chartDataMap[d.Drug_Name] = d;
       chartDataMap[d.Drug_Name]["Disease_Group"] = [];
       chartDataMap[d.Drug_Name]["Indication_Name"] = [];
-      chartDataMap[d.Drug_Name]["Route_Of_Administration"] = [];
+      chartDataMap[d.Drug_Name]["Route_of_Administration"] = [];
     });
     const otherdata = props.data.allOtherdataCsv.edges.map((edge) => edge.node);
     otherdata.forEach((d) => {
@@ -44,12 +44,12 @@ const GraphPage = (props) => {
           d.Indication_Name
         ) === -1 &&
         chartDataMap[d.Drug_Name]["Indication_Name"].push(d.Indication_Name);
-      d.Route_Of_Administration &&
-        chartDataMap[d.Drug_Name]["Route_Of_Administration"].indexOf(
-          d.Route_Of_Administration
+      d.Route_of_Administration &&
+        chartDataMap[d.Drug_Name]["Route_of_Administration"].indexOf(
+          d.Route_of_Administration
         ) === -1 &&
-        chartDataMap[d.Drug_Name]["Route_Of_Administration"].push(
-          d.Route_Of_Administration
+        chartDataMap[d.Drug_Name]["Route_of_Administration"].push(
+          d.Route_of_Administration
         );
     });
     const newChartData = [];
@@ -71,19 +71,19 @@ const GraphPage = (props) => {
         <title>Peptide Therapeutics Landscape</title>
       </Helmet>
       <HeaderWrapper>
-        <h1>Revenue and AE Rates for Approved Drugs with GPCR Targets</h1>
+        <h1>Revenue and AE Rates for Approved Drugs with Cell Membrane Targets</h1>
       </HeaderWrapper>
       <GraphsWrapper>
         {chartData.length > 0 ? (
           <>
             <GraphComponent
               title="Absolute Measure (FDA label data)"
-              data={ae1data}
+              data={[...ae1data]}
               field="AE1"
             />
             <GraphComponent
               title="Relative Measure (FDA label data)"
-              data={ae2data}
+              data={[...ae2data]}
               field="AE2"
             />
           </>

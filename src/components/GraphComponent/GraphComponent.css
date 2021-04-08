@@ -1,55 +1,78 @@
 .graph-container {
-  text-align: center;
+	text-align: center;
 }
 .graph-wrapper {
-  position: relative;
+	position: relative;
 }
 .legend-wrapper {
-  margin-bottom: 200px;
+	margin-bottom: 200px;
 }
 
 .legend-wrapper table {
-  margin: auto;
-  border-spacing: 0 8px;
+	margin: auto;
+	border-spacing: 0 8px;
 }
 
 .legend-wrapper tr:last-child {
-  border-bottom: 1px solid black;
+	border-bottom: 1px solid black;
 }
 .legend-wrapper tr + tr {
-  border-top: 1px solid black;
+	border-top: 1px solid black;
 }
 
 .legend-wrapper td + td {
-  padding: 5px 0;
-  text-align: start;
-  padding-left: 20px;
+	padding: 5px 0;
+	text-align: start;
+	padding-left: 20px;
 }
 
 .legend-wrapper th {
-  padding-bottom: 8px;
+	padding-bottom: 8px;
+}
+
+.tooltip-colored {
+	border: solid;
+	border-width: 1px;
+	border-radius: 5px;
+	background-color: #c4c4c4;
+	padding: 10px;
+}
+
+.tooltip-header-row {
+	display: flex;
 }
 
 .tooltip-revenue {
-  text-align: left;
+	text-align: left;
+}
+
+.tooltip-revenue + .tooltip-revenue {
+	margin-left: 10px;
 }
 
 .tooltip-title {
-  text-align: left;
-  margin-left: 0 !important;
-  font-size: 16px;
-  text-decoration: underline;
+	text-align: left;
+	margin-left: 0 !important;
+	font-size: 16px;
 }
 
 .tooltip a {
-  display: block;
-  text-align: left;
-  color: blue;
-  text-decoration: underline;
+	display: block;
+	text-align: left;
+	color: #0066ff;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 .tooltip-table {
-  border-collapse: none;
+	border-collapse: none;
 }
 .tooltip-table tr {
-  text-align: left;
+	text-align: left;
+}
+
+.tooltip-table td {
+	font-weight: bold;
+}
+.tooltip-table td:not(:first-child) {
+	font-weight: normal;
 }
